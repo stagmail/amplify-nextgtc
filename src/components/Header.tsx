@@ -1,5 +1,8 @@
+import { useAuthenticator } from "@aws-amplify/ui-react";
 
 export default function Header() {
+  const { user } = useAuthenticator();
+  
     return (
 
     <header className="relative bg-white shadow mb-12">
