@@ -8,25 +8,20 @@ type NavbarProps = {
 };
 
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
+  { name: 'Dashboard', href: '/', current: false },
+  { name: 'Indent', href: '/indent', current: false },
+  { name: 'Listings', href: '/listing', current: false },
+  { name: 'Staff', href: '#', current: false },
   { name: 'Reports', href: '#', current: false },
 ]
-const userNavigation = [
-  { name: 'Your profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
-]
+
 
 function classNames(...classes: (string | undefined | null | false)[]): string {
   return classes.filter(Boolean).join(' ');
 }
 
 
-
-export default function Navbar({ user, signOut}: NavbarProps) {
+export default function Navbar({ user, signOut }: NavbarProps) {
   return (
     <>
       <div className="w-full">
@@ -51,8 +46,8 @@ export default function Navbar({ user, signOut}: NavbarProps) {
                         href={item.href}
                         aria-current={item.current ? 'page' : undefined}
                         className={classNames(
-                          item.current ? 'bg-slate-700 text-white rounded-lg' : 'text-slate-800 hover:bg-white/5 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium',
+                          item.current ? 'bg-slate-700 text-white rounded-lg' : 'text-slate-800 hover:bg-white/5 hover:text-slate-300',
+                          'rounded-md px-3 py-2 text-sm font-semibold',
                         )}
                       >
                         {item.name}
@@ -74,7 +69,7 @@ export default function Navbar({ user, signOut}: NavbarProps) {
 
 {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
-                    <MenuButton className="relative flex max-w-xs items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400">
+                    <MenuButton className="relative flex cursor-pointer max-w-xs items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
                       <UserCircleIcon className="size-8 text-slate-600" />
@@ -90,11 +85,12 @@ export default function Navbar({ user, signOut}: NavbarProps) {
                           >
                             {user?.signInDetails?.loginId}
                           </div>
+                          
                           <div
                             className="block px-4 py-2 text-[.9rem] text-slate-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                           >
-                               <button className="block px-4 py-2 text-slate-100 bg-teal-600 data-focus:bg-slate-100 data-focus:outline-hidden rounded-lg pointer-events-auto" 
-                          onClick={signOut}>Sign Out</button>
+                               <a className="px-5 py-2 text-slate-100 bg-amber-500 data-focus:bg-slate-100 data-focus:outline-hidden rounded-full pointer-events-auto" href="#"
+                          onClick={signOut}>Sign Out</a>
                           </div>
                        
                     </MenuItems>
@@ -151,7 +147,7 @@ export default function Navbar({ user, signOut}: NavbarProps) {
 
       {/* mobile userNavigation */}
                 <div className="mt-3 space-y-1 px-5">
-                  <div className="text-base/5 font-medium text-teal-700">{user?.signInDetails?.loginId}</div>
+                  <div className="text-base/5 font-[.9rem] text-teal-700">{user?.signInDetails?.loginId}</div>
                   {/* <button onClick={signOut}>Sign Out</button> */}
                   {/* <div className="text-sm font-medium text-gray-400">{user?.signInDetails?.loginId}</div> */}
                 </div>
@@ -165,16 +161,6 @@ export default function Navbar({ user, signOut}: NavbarProps) {
           </DisclosurePanel>
         </Disclosure>
 
-        <header className="relative bg-white shadow">
-          <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
-            <button>Home to Work</button>
-            <button>Work to Home</button>
-          </div>
-        </header>
-        <main>
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">{/* Your content */}</div>
-        </main>
       </div>
     </>
   )

@@ -7,12 +7,32 @@ specifies that any unauthenticated user can "create", "read", "update",
 and "delete" any "Todo" records.
 =========================================================================*/
 const schema = a.schema({
-  Todo: a
+  // Todo: a
+  //   .model({
+  //     content: a.string(),
+  //   })
+  //   .authorization((allow) => [allow.owner()]),
+
+    TransportToWork: a
     .model({
-      content: a.string(),
+      pickupLocation: a.string().required(),
+      dropoffLocation: a.enum(['LocationOne', 'LocationTwo', 'LocationThree', 'LocationFour', 'LocationFive']),
+      pickupTime: a.datetime().required(),
+      paxNameId: a.string().required(),
+    })
+    .authorization((allow) => [allow.owner()]),
+
+    TransportToHome: a
+    .model({
+      pickupLocation: a.enum(['LocationOne', 'LocationTwo', 'LocationThree', 'LocationFour', 'LocationFive']),
+      dropoffLocation: a.string().required(),
+      pickupTime: a.datetime().required(),
+      paxNameId: a.string().required(),
     })
     .authorization((allow) => [allow.owner()]),
 });
+
+
 
 export type Schema = ClientSchema<typeof schema>;
 

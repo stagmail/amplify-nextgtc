@@ -1,6 +1,6 @@
 "use client"
 
-import { Image, Authenticator, ThemeProvider, View, Text, useTheme, Theme } from "@aws-amplify/ui-react";
+import { Image, Authenticator, ThemeProvider, View, useTheme, Theme } from "@aws-amplify/ui-react";
 import "../app/globals.css";
 import "../app/styles.css"
 // import "@aws-amplify/ui-react/styles.css";
@@ -53,17 +53,6 @@ const Components = {
     );
   },
 
-  Footer() {
-    const { tokens } = useTheme();
-
-    return (
-      <View textAlign="center" padding={tokens.space.large}>
-        <Text color={tokens.colors.neutral[80]} fontSize={tokens.fontSizes.xs}>
-          &copy; All Rights Reserved 2025 | Ground Transport Concierge
-        </Text>
-      </View>
-    );
-  },
 
 }
 

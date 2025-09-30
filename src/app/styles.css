@@ -6,9 +6,30 @@
   margin-top: 40px;
   text-transform: uppercase;
   font-size: .9rem;
-  /* background-color: #FAAB00; */
-;
 }
+
+.amplify-field-group__control {
+  border-radius: 32px;
+  font-size: .9rem;
+  padding: 12px 16px;
+  height: auto;
+}
+
+.amplify-button[type="submit"] {
+  border-radius: 32px;
+  text-transform: uppercase;
+  font-size: .9rem;
+  width: 200px;
+}
+
+/* .amplify-button[type="button"] {
+  border-radius: 32px;
+  text-transform: uppercase;
+  font-size: .9rem;
+  width: 138px;
+  background-color: #f3f4f6;
+  color: #374151;
+} */
 
 [data-amplify-authenticator] [data-amplify-router] {
   border-radius: 32px;
@@ -36,4 +57,16 @@
 
 .amplify-label {
   font-size: .9rem;
+}
+
+#btn-htw {
+  font-size: .9rem;
+}
+
+select {
+  border-radius: 32px;
+  /* font-size: .9rem; */
+  /* padding: 12px 16px; */
+  background: none;
+  appearance: none;
 }
