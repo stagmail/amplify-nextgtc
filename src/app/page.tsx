@@ -24,11 +24,16 @@ export default function Page() {
     <Navbar user={user} signOut={signOut} />
 
     <header className="relative bg-white shadow mb-12">
-      <div className="flex mx-auto max-w-7xl px-2 py-6 sm:px-6 lg:px-8 items-center">
 
-      <h1 className="text-xl font-bold tracking-tight text-gray-900">Dashboard <span className="text-xl font-light text-salte-600"> - Duty Manager</span></h1>
-       
-       <div className="flex ml-auto text-slate-500 text-[.9rem]">{user?.signInDetails?.loginId}</div>
+      <div className="flex mx-auto max-w-7xl px-4 md:px-8 py-6 items-center">
+
+      <div className="flex-row md:flex items-center space-x-2">
+      <div className="text-xl font-bold tracking-tight text-slate-700">Dashboard</div>  
+      <div className="text-xl font-light text-slate-600">Duty Manager</div> 
+      </div> 
+
+       <div className="flex ml-auto text-slate-500 text-[.8rem] md:text-[.9rem]">{user?.signInDetails?.loginId}</div>
+
       </div>
     </header>
 

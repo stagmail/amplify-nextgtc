@@ -49,10 +49,10 @@ export default function ToHomeButton() {
   };
 
   return (
-    <>
-      <a onClick={() => setIsOpen(true)} href="#" className="flex items-center justify-center py-2 px-8 bg-[#047d95] hover:bg-teal-500 m-4 mx-auto text-white rounded-full shadow-lg text-[1rem] text-center w-[240px]">
-        <HomeIcon aria-hidden="true" className="block size-5 m-2 group-data-open:hidden" /> TO HOME
-      </a>
+    <div>
+      <button onClick={() => setIsOpen(true)} className="flex items-center justify-center py-2 px-8 m-4 bg-[#047d95] hover:bg-teal-500 mx-auto text-white rounded-full shadow-xl text-[1rem] text-center w-[240px] cursor-pointer">
+        <HomeIcon aria-hidden="true" className="block size-5 m-2" /> TO HOME
+      </button>
 
       <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
         <DialogBackdrop className="fixed inset-0 bg-black/80" />
@@ -141,6 +141,6 @@ export default function ToHomeButton() {
           </DialogPanel>
         </div>
       </Dialog>
-    </>
+    </div>
   )
 }

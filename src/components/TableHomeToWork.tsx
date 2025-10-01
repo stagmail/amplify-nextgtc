@@ -57,9 +57,16 @@ To Work</h2>
                     <tr key={trip.id}>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.pickupLocation}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.dropoffLocation}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
-                        {new Date(trip.pickupTime).toLocaleString()}
-                      </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 uppercase">
+                {new Date(trip.pickupTime).toLocaleDateString('en-GB', { 
+                  day: '2-digit', 
+                  month: 'short', 
+                  year: 'numeric' 
+                })} {new Date(trip.pickupTime).toLocaleTimeString('en-GB', {
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}
+              </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.paxNameId}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
                         <button 

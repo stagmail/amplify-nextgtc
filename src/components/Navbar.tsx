@@ -69,7 +69,7 @@ export default function Navbar({ user, signOut }: NavbarProps) {
 
 {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
-                    <MenuButton className="relative flex cursor-pointer max-w-xs items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400">
+                    <MenuButton className="relative flex cursor-pointer max-w-xs items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400 hover:bg-amber-300">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
                       <UserCircleIcon className="size-8 text-slate-600" />

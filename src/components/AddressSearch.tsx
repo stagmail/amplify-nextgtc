@@ -43,12 +43,18 @@ export default function AddressSearch({ value, onChange, placeholder }: AddressS
     return () => clearTimeout(timeoutId);
   }, [query, value]);
 
-  const handleSelect = (address: any) => {
-    const fullAddress = `${address.ADDRESS} Singapore ${address.POSTAL}`;
-    setQuery(fullAddress);
-    onChange(fullAddress);
-    setShowSuggestions(false);
-  };
+const handleSelect = (address: any) => {
+  setQuery(address.ADDRESS);
+  onChange(address.ADDRESS);
+  setShowSuggestions(false);
+};
+
+  // const handleSelect = (address: any) => {
+  //   const fullAddress = `${address.ADDRESS} Singapore ${address.POSTAL}`;
+  //   setQuery(fullAddress);
+  //   onChange(fullAddress);
+  //   setShowSuggestions(false);
+  // };
 
   return (
     <div className="relative">
