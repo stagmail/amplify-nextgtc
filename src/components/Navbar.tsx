@@ -11,10 +11,9 @@ const navigation = [
   { name: 'Dashboard', href: '/', current: false },
   { name: 'Indent', href: '/indent', current: false },
   { name: 'Listings', href: '/listing', current: false },
-  { name: 'Staff', href: '#', current: false },
-  { name: 'Reports', href: '#', current: false },
+  { name: 'Staff', href: '/staff', current: false },
+  { name: 'Reports', href: '/reports', current: false },
 ]
-
 
 function classNames(...classes: (string | undefined | null | false)[]): string {
   return classes.filter(Boolean).join(' ');

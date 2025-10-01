@@ -9,9 +9,8 @@
 // import Navbar from "../../components/Navbar";
 // import TableWorkToHome from "../../components/TableWorkToHome";
 // import TableHomeToWork from "../../components/TableHomeToWork";
-
-
 // const client = generateClient<Schema>();
+
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import Navbar from "../../components/Navbar";
 import TableWorkToHome from "../../components/TableWorkToHome";
@@ -22,9 +21,6 @@ import ToHomeButton from "../../components/ToHomeButton";
 export default function Page() {
     
 const { user, signOut } = useAuthenticator();
-
-
-
 
 
   return (
