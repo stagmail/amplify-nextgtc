@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon, UserCircleIcon } from '@heroicons/react/24/outline'
 
@@ -10,7 +11,7 @@ type NavbarProps = {
 const navigation = [
   { name: 'Dashboard', href: '/', current: false },
   { name: 'Indent', href: '/indent', current: false },
-  { name: 'Listings', href: '/listing', current: false },
+  { name: 'Lists', href: '/listing', current: false },
   { name: 'Staff', href: '/staff', current: false },
   { name: 'Reports', href: '/reports', current: false },
 ]
@@ -24,9 +25,9 @@ export default function Navbar({ user, signOut }: NavbarProps) {
   return (
     <>
       <div className="w-full">
-        <Disclosure as="nav" className="bg-slate-100">
+        <Disclosure as="nav" className="bg-slate-200">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex h-16 items-center justify-between">
+            <div className="flex h-18 items-center justify-between">
               <div className="flex items-center">
                 <div className="shrink-0">
                   <Image
@@ -40,17 +41,17 @@ export default function Navbar({ user, signOut }: NavbarProps) {
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
                         href={item.href}
                         aria-current={item.current ? 'page' : undefined}
                         className={classNames(
                           item.current ? 'bg-slate-700 text-white rounded-lg' : 'text-slate-800 hover:bg-white/5 hover:text-slate-300',
-                          'rounded-md px-3 py-2 text-sm font-semibold',
+                          'rounded-md px-3 py-2 text-sm font-semibold uppercase',
                         )}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>

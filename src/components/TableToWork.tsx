@@ -5,14 +5,14 @@ import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../../amplify/data/resource";
 import { Amplify } from "aws-amplify";
 import outputs from "../../amplify_outputs.json";
-import { BuildingOffice2Icon } from '@heroicons/react/20/solid';
+import { BriefcaseIcon } from '@heroicons/react/20/solid';
 
 
 Amplify.configure(outputs);
 
 const client = generateClient<Schema>();
 
-export default function TableHomeToWork() {
+export default function TableToWork() {
     
 
 const [workTrips, setWorkTrips] = useState<Array<Schema["TransportToWork"]["type"]>>([]);
@@ -39,8 +39,8 @@ function listWorkTrips() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* To Work Table */}
           <div className="mt-8">
-            <h2 className="flex items-center text-[1rem] font-semibold mb-4 bg-slate-100 p-2 indent-0.5 rounded-md"><BuildingOffice2Icon aria-hidden="true" className="block size-4 m-2" />
-To Work</h2>
+            <h2 className="flex items-center text-[1rem] font-semibold mb-4 bg-slate-100 p-2 indent-0.5 rounded-full"><BriefcaseIcon aria-hidden="true" className="block size-4 m-2" />
+Transport To Work ({workTrips.length})</h2>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead>
@@ -53,7 +53,14 @@ To Work</h2>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {workTrips.map((trip) => (
+                  {workTrips.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="px-3 py-4 text-sm text-gray-500 text-center">
+                        No bookings found
+                      </td>
+                    </tr>
+                  ) : (
+                    workTrips.map((trip) => (
                     <tr key={trip.id}>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.pickupLocation}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.dropoffLocation}</td>
@@ -77,7 +84,7 @@ To Work</h2>
                         </button>
                       </td>
                     </tr>
-                  ))}
+                  )))}
                 </tbody>
               </table>
             </div>

@@ -12,7 +12,7 @@ Amplify.configure(outputs);
 
 const client = generateClient<Schema>();
 
-export default function TableWorkToHome() {
+export default function TableToHome() {
     
 
 const [homeTrips, setHomeTrips] = useState<Array<Schema["TransportToHome"]["type"]>>([]);
@@ -41,7 +41,7 @@ function listHomeTrips() {
 
           {/* To Home Table */}
           <div className="mt-8">
-            <h2 className="flex items-center text-[1rem] font-semibold mb-4 bg-slate-100 p-2 indent-0.5 rounded-md"><HomeIcon aria-hidden="true" className="block size-4 m-2" />To Home</h2>
+            <h2 className="flex items-center text-[1rem] font-semibold mb-4 bg-slate-100 p-2 indent-0.5 rounded-full"><HomeIcon aria-hidden="true" className="block size-4 m-2" />Transport To Home ({homeTrips.length})</h2>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead>
@@ -54,7 +54,14 @@ function listHomeTrips() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {homeTrips.map((trip) => (
+                  {homeTrips.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="px-3 py-4 text-sm text-gray-500 text-center">
+                        No bookings found
+                      </td>
+                    </tr>
+                  ) : (
+                  homeTrips.map((trip) => (
                     <tr key={trip.id}>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.pickupLocation}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.dropoffLocation}</td>
@@ -78,7 +85,7 @@ function listHomeTrips() {
                         </button>
                       </td>
                     </tr>
-                  ))}
+                  )))}
                 </tbody>
               </table>
             </div>

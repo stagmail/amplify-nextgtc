@@ -27,8 +27,8 @@ export default async function RootLayout({
       <body className={geistSans.className}>
         <AuthenticatorWrapper>
         {children}
-        </AuthenticatorWrapper>
         <Footer />
+        </AuthenticatorWrapper>
       </body>
     </html>
   );

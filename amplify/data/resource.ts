@@ -20,7 +20,7 @@ const schema = a.schema({
       pickupTime: a.datetime().required(),
       paxNameId: a.string().required(),
     })
-    .authorization((allow) => [allow.owner()]),
+    .authorization((allow) => [allow.publicApiKey()]),
 
     TransportToHome: a
     .model({
@@ -29,7 +29,16 @@ const schema = a.schema({
       pickupTime: a.datetime().required(),
       paxNameId: a.string().required(),
     })
-    .authorization((allow) => [allow.owner()]),
+    .authorization((allow) => [allow.publicApiKey()]),
+
+    Staff: a
+    .model({
+      fullName: a.string().required(),
+      staffId: a.string().required(),
+      mobileNumber: a.string().required(),
+      homeAddress: a.string().required(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
 });
 
 
@@ -39,7 +48,7 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: 'userPool',
+    defaultAuthorizationMode: 'apiKey',
      apiKeyAuthorizationMode: {
       expiresInDays: 30,
     },
