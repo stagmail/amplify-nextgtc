@@ -6,7 +6,6 @@ import type { Schema } from "../../amplify/data/resource";
 import { Amplify } from "aws-amplify";
 import outputs from "../../amplify_outputs.json";
 import { HomeIcon } from '@heroicons/react/20/solid';
-import { Dialog, DialogBackdrop, DialogPanel, Button } from '@headlessui/react'
 
 Amplify.configure(outputs);
 
@@ -46,6 +45,7 @@ function listHomeTrips() {
               <table className="min-w-full divide-y divide-gray-300">
                 <thead>
                   <tr>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">S/N</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup Location</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Dropoff Location</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup Time</th>
@@ -56,13 +56,14 @@ function listHomeTrips() {
                 <tbody className="divide-y divide-gray-200">
                   {homeTrips.length === 0 ? (
                     <tr>
-                      <td colSpan={5} className="px-3 py-4 text-sm text-gray-500 text-center">
+                      <td colSpan={6} className="px-3 py-4 text-sm text-gray-500 text-center">
                         No bookings found
                       </td>
                     </tr>
                   ) : (
-                  homeTrips.map((trip) => (
+                  homeTrips.map((trip, index) => (
                     <tr key={trip.id}>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{index + 1}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.pickupLocation}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.dropoffLocation}</td>
                                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 uppercase">

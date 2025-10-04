@@ -39,6 +39,7 @@ export default function StaffTable() {
           <table className="min-w-full divide-y divide-gray-300">
             <thead>
               <tr>
+                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">S/N</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Full Name</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Staff ID</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Mobile Number</th>
@@ -49,13 +50,14 @@ export default function StaffTable() {
             <tbody className="divide-y divide-gray-200">
               {staff.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-3 py-4 text-sm text-gray-500 text-center">
+                  <td colSpan={6} className="px-3 py-4 text-sm text-gray-500 text-center">
                     No staff found
                   </td>
                 </tr>
               ) : (
-                staff.map((member) => (
+                staff.map((member, index) => (
                   <tr key={member.id}>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{index + 1}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{member.fullName}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{member.staffId}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{member.mobileNumber}</td>
