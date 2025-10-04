@@ -58,7 +58,7 @@ Transport To Work ({workTrips.length})</h2>
                 <tbody className="divide-y divide-gray-200">
                   {workTrips.length === 0 ? (
                     <tr>
-                      <td colSpan={5} className="px-3 py-4 text-sm text-gray-500 text-center">
+                      <td colSpan={6} className="px-3 py-4 text-sm text-gray-500 text-center">
                         No bookings found
                       </td>
                     </tr>
