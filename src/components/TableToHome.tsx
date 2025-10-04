@@ -6,7 +6,7 @@ import type { Schema } from "../../amplify/data/resource";
 import { Amplify } from "aws-amplify";
 import outputs from "../../amplify_outputs.json";
 import { HomeIcon } from '@heroicons/react/20/solid';
-
+import { Dialog, DialogBackdrop, DialogPanel, Button } from '@headlessui/react'
 
 Amplify.configure(outputs);
 
@@ -14,9 +14,7 @@ const client = generateClient<Schema>();
 
 export default function TableToHome() {
     
-
 const [homeTrips, setHomeTrips] = useState<Array<Schema["TransportToHome"]["type"]>>([]);
-
 
 function listHomeTrips() { 
       client.models.TransportToHome.observeQuery().subscribe({
@@ -25,8 +23,10 @@ function listHomeTrips() {
   }
 
   function deleteHomeTrip(id: string) {
+  if (window.confirm('Are you sure you want to delete this booking?')) {
     client.models.TransportToHome.delete({ id });
   }
+}
 
   useEffect(() => {
      listHomeTrips();

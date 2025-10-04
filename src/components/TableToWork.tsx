@@ -24,9 +24,11 @@ function listWorkTrips() {
     });
   }
 
-  function deleteWorkTrip(id: string) {
-    client.models.TransportToWork.delete({ id });
+    function deleteWorkTrip(id: string) {
+  if (window.confirm('Are you sure you want to delete this booking?')) {
+    client.models.TransportToHome.delete({ id });
   }
+}
 
   useEffect(() => {
      listWorkTrips();
