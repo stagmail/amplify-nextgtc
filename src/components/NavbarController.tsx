@@ -10,10 +10,12 @@ type NavbarProps = {
 
 const navigation = [
   { name: 'Dashboard', href: '/controller', current: false },
-  { name: 'Indent', href: '/indent', current: false },
+  { name: 'Pooling', href: '/pooling', current: false },
   { name: 'Lists', href: '/listing', current: false },
-  { name: 'Staff', href: '/staff', current: false },
+  { name: 'Driver', href: '/driver', current: false },
+  // { name: 'Staff', href: '/staff', current: false },
   { name: 'Reports', href: '/reports', current: false },
+  { name: 'Manager Dashboard', href: '/', current: false },
   // { name: 'Controller', href: '/controller', current: false },
 ]
 
@@ -22,7 +24,7 @@ function classNames(...classes: (string | undefined | null | false)[]): string {
 }
 
 
-export default function Navbar({ user, signOut }: NavbarProps) {
+export default function NavbarController({ user, signOut }: NavbarProps) {
   return (
     <>
       <div className="w-full">

@@ -41,8 +41,8 @@ function listWorkTrips() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* To Work Table */}
           <div className="mt-8">
-            <h2 className="flex items-center text-[1rem] font-semibold mb-4 bg-slate-100 p-2 indent-0.5 rounded-full"><BriefcaseIcon aria-hidden="true" className="block size-4 m-2" />
-Transport To Work ({workTrips.length})</h2>
+            <h2 className="flex items-center text-[1rem] font-semibold mb-4 bg-slate-100 p-2 gap-2 rounded-full"><BriefcaseIcon aria-hidden="true" className="block size-4" />
+Transport To Work ( {workTrips.length} )</h2>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead>

@@ -5,35 +5,35 @@ import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../../amplify/data/resource";
 import { Amplify } from "aws-amplify";
 import outputs from "../../amplify_outputs.json";
-import { UserGroupIcon } from '@heroicons/react/20/solid';
+import { UserPlusIcon } from '@heroicons/react/20/solid';
 
 Amplify.configure(outputs);
 
 const client = generateClient<Schema>();
 
-export default function StaffTable() {
-  const [staff, setStaff] = useState<Array<Schema["Staff"]["type"]>>([]);
+export default function DriverListTable() {
+  const [drivers, setDrivers] = useState<Array<Schema["Driver"]["type"]>>([]);
 
-  function listStaff() {
-    client.models.Staff.observeQuery().subscribe({
-      next: (data) => setStaff([...data.items]),
+  function listDrivers() {
+    client.models.Driver.observeQuery().subscribe({
+      next: (data) => setDrivers([...data.items]),
     });
   }
 
-  function deleteStaff(id: string) {
-    client.models.Staff.delete({ id });
+  function deleteDriver(id: string) {
+    client.models.Driver.delete({ id });
   }
 
   useEffect(() => {
-    listStaff();
+    listDrivers();
   }, []);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="mt-8">
         <h2 className="flex items-center text-[1rem] font-semibold gap-2 mb-4 bg-slate-100 px-4 py-2 rounded-full">
-          <UserGroupIcon aria-hidden="true" className="block size-4" />
-          Staff List ({staff.length})
+          <UserPlusIcon aria-hidden="true" className="block size-4" />
+          Driver List ({drivers.length})
         </h2>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-300">
@@ -41,30 +41,30 @@ export default function StaffTable() {
               <tr>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">S/N</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Full Name</th>
-                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Staff ID</th>
-                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Mobile Number</th>
-                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Home Address</th>
+                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Licence No.</th>
+                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Vehicle No.</th>
+                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Mobile No.</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {staff.length === 0 ? (
+              {drivers.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="px-3 py-4 text-sm text-gray-500 text-center">
-                    No staff found
+                    No drivers found
                   </td>
                 </tr>
               ) : (
-                staff.map((member, index) => (
-                  <tr key={member.id}>
+                drivers.map((driver, index) => (
+                  <tr key={driver.id}>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{index + 1}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{member.fullName}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{member.staffId}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{member.mobileNumber}</td>
-                    <td className="px-3 py-4 text-sm text-gray-900 max-w-xs truncate">{member.homeAddress}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{driver.fullName}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{driver.licenceNo}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{driver.vehicleNo}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{driver.mobileNumber}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
                       <button 
-                        onClick={() => deleteStaff(member.id)}
+                        onClick={() => deleteDriver(driver.id)}
                         className="text-red-600 hover:text-red-900 cursor-pointer"
                       >
                         Delete
