@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "@/../amplify/data/resource";
-import PoolingInterface from "./PoolingInterface";
 import DriverManagement from "./DriverManagement";
 
 const client = generateClient<Schema>();
@@ -40,7 +39,7 @@ export default function ControllerDashboard() {
       </div>
 
       {/* Tab Content */}
-      {activeTab === 'pooling' && <PoolingInterface />}
+      {/* {activeTab === 'pooling' && <PoolingInterface />} */}
       {activeTab === 'drivers' && <DriverManagement />}
     </div>
   );
