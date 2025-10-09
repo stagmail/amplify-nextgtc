@@ -14,7 +14,7 @@ const navigation = [
   { name: 'Lists', href: '/listing', current: false },
   { name: 'Staff', href: '/staff', current: false },
   { name: 'Reports', href: '/reports', current: false },
-  // { name: 'Controller', href: '/controller', current: false },
+  { name: 'Controller', href: '/controller', current: true },
 ]
 
 function classNames(...classes: (string | undefined | null | false)[]): string {
@@ -47,7 +47,7 @@ export default function Navbar({ user, signOut }: NavbarProps) {
                         href={item.href}
                         aria-current={item.current ? 'page' : undefined}
                         className={classNames(
-                          item.current ? 'bg-slate-700 text-white rounded-lg' : 'text-slate-800 hover:bg-white/5 hover:text-slate-300',
+                          item.current ? 'text-slate-400' : 'text-slate-800 hover:bg-white/5 hover:text-slate-300',
                           'rounded-md px-3 py-2 text-sm font-semibold uppercase',
                         )}
                       >

@@ -15,7 +15,7 @@ const navigation = [
   { name: 'Driver', href: '/driver', current: false },
   // { name: 'Staff', href: '/staff', current: false },
   { name: 'Reports', href: '/reports', current: false },
-  { name: 'Manager Dashboard', href: '/', current: false },
+  { name: 'Manager', href: '/', current: true },
   // { name: 'Controller', href: '/controller', current: false },
 ]
 
@@ -49,7 +49,7 @@ export default function NavbarController({ user, signOut }: NavbarProps) {
                         href={item.href}
                         aria-current={item.current ? 'page' : undefined}
                         className={classNames(
-                          item.current ? 'bg-slate-700 text-white rounded-lg' : 'text-slate-800 hover:bg-white/5 hover:text-slate-300',
+                          item.current ? 'text-slate-400' : 'text-slate-800 hover:bg-white/5 hover:text-slate-300',
                           'rounded-md px-3 py-2 text-sm font-semibold uppercase',
                         )}
                       >
