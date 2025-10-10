@@ -6,6 +6,7 @@ import type { Schema } from "../../amplify/data/resource";
 import { Amplify } from "aws-amplify";
 import outputs from "../../amplify_outputs.json";
 import { BriefcaseIcon } from '@heroicons/react/20/solid';
+import AssignDriverDialog from './AssignDriverDialog';
 
 Amplify.configure(outputs);
 
@@ -14,6 +15,8 @@ const client = generateClient<Schema>();
 export default function TableToWorkController() {
   const [workTrips, setWorkTrips] = useState<Array<Schema["TransportToWork"]["type"]>>([]);
   const [selectedTrips, setSelectedTrips] = useState<Set<string>>(new Set());
+  const [drivers, setDrivers] = useState<Array<Schema["Driver"]["type"]>>([]);
+  const [showAssignDialog, setShowAssignDialog] = useState(false);
 
   function listWorkTrips() {
     client.models.TransportToWork.observeQuery().subscribe({
@@ -45,9 +48,41 @@ export default function TableToWorkController() {
     setSelectedTrips(newSelected);
   }
 
+  function loadDrivers() {
+    client.models.Driver.observeQuery().subscribe({
+      next: (data) => setDrivers([...data.items]),
+    });
+  }
+
+  function getDriverName(driverId: string | null | undefined) {
+    if (!driverId) return 'Unassigned';
+    const driver = drivers.find(d => d.id === driverId);
+    return driver ? `${driver.fullName} (${driver.vehicleNo})` : 'Unknown Driver';
+  }
+
+  async function assignIndividualDriver(tripId: string, driverId: string) {
+    try {
+      const driverIdToAssign = driverId === 'UNASSIGN' ? null : driverId;
+      await client.models.TransportToWork.update({
+        id: tripId,
+        assignedDriverId: driverIdToAssign
+      });
+    } catch (error) {
+      console.error('Error assigning driver:', error);
+    }
+  }
+
   // Controller-specific functions
   function assignDriver() {
-    console.log('Assign driver to selected trips:', Array.from(selectedTrips));
+    if (selectedTrips.size === 0) {
+      alert('Please select trips to assign');
+      return;
+    }
+    setShowAssignDialog(true);
+  }
+
+  function handleAssignmentComplete() {
+    setSelectedTrips(new Set());
   }
 
   function poolTrips() {
@@ -56,6 +91,7 @@ export default function TableToWorkController() {
 
   useEffect(() => {
     listWorkTrips();
+    loadDrivers();
   }, []);
 
   return (
@@ -95,7 +131,7 @@ export default function TableToWorkController() {
                     type="checkbox"
                     checked={workTrips.length > 0 && selectedTrips.size === workTrips.length}
                     onChange={(e) => handleSelectAll(e.target.checked)}
-                    className="rounded border-gray-300 size-3.5"
+                    className="rounded border-gray-300 size-4"
                   />
                 </th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">S/N</th>
@@ -103,13 +139,14 @@ export default function TableToWorkController() {
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Dropoff Location</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup Time</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Passenger</th>
+                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Assigned Driver</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               {workTrips.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-3 py-4 text-sm text-gray-500 text-center">
+                  <td colSpan={8} className="px-3 py-4 text-sm text-gray-500 text-center">
                     No bookings found
                   </td>
                 </tr>
@@ -121,7 +158,7 @@ export default function TableToWorkController() {
                         type="checkbox"
                         checked={selectedTrips.has(trip.id)}
                         onChange={(e) => handleSelectTrip(trip.id, e.target.checked)}
-                        className="rounded border-gray-300 size-3.5"
+                        className="rounded border-gray-300 size-4"
                       />
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{index + 1}</td>
@@ -138,6 +175,20 @@ export default function TableToWorkController() {
                       })}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.paxNameId}</td>
+                    <td className="px-3 py-4 text-sm text-gray-900">
+                      <select
+                        value={trip.assignedDriverId || 'UNASSIGN'}
+                        onChange={(e) => assignIndividualDriver(trip.id, e.target.value)}
+                        className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                      >
+                        <option value="UNASSIGN">Unassigned</option>
+                        {drivers.map((driver) => (
+                          <option key={driver.id} value={driver.id}>
+                            {driver.fullName} - {driver.vehicleNo}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
                       <button 
                         onClick={() => deleteWorkTrip(trip.id)}
@@ -153,6 +204,14 @@ export default function TableToWorkController() {
           </table>
         </div>
       </div>
+
+      <AssignDriverDialog
+        isOpen={showAssignDialog}
+        onClose={() => setShowAssignDialog(false)}
+        selectedTrips={Array.from(selectedTrips)}
+        tripType="ToWork"
+        onAssignmentComplete={handleAssignmentComplete}
+      />
     </div>
   );
 }

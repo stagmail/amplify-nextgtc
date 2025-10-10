@@ -10,6 +10,7 @@ const schema = a.schema({
       dropoffLocation: a.enum(['LocationOne', 'LocationTwo', 'LocationThree', 'LocationFour', 'LocationFive']),
       pickupTime: a.datetime().required(),
       paxNameId: a.string().required(),
+      assignedDriverId: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
 
@@ -19,6 +20,17 @@ const schema = a.schema({
       dropoffLocation: a.string().required(),
       pickupTime: a.datetime().required(),
       paxNameId: a.string().required(),
+      assignedDriverId: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+    Assignment: a
+    .model({
+      tripId: a.string().required(),
+      driverId: a.string().required(),
+      tripType: a.enum(['ToWork', 'ToHome']),
+      assignedAt: a.datetime().required(),
+      status: a.enum(['Assigned', 'InProgress', 'Completed', 'Cancelled']),
     })
     .authorization((allow) => [allow.publicApiKey()]),
 

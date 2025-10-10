@@ -22,7 +22,10 @@ export default function PassengerSearch({ value, onChange, placeholder }: Passen
     "David Brown - EMP005",
     "Lisa Davis - EMP006",
     "Tom Anderson - EMP007",
-    "Emma Taylor - EMP008"
+    "Emma Taylor - EMP008",
+    "James Toh - EMP009",
+    "Alvin Law - EMP010",
+    "Nicolas Burn - EMP011",
   ];
 
   useEffect(() => {
@@ -30,8 +33,19 @@ export default function PassengerSearch({ value, onChange, placeholder }: Passen
       const filtered = passengers.filter(passenger =>
         passenger.toLowerCase().includes(query.toLowerCase())
       );
-      setSuggestions(filtered.slice(0, 5));
-      setShowSuggestions(true);
+      
+      // Don't show suggestions if query exactly matches a passenger
+      const exactMatch = passengers.some(passenger => 
+        passenger.toLowerCase() === query.toLowerCase()
+      );
+      
+      if (exactMatch) {
+        setSuggestions([]);
+        setShowSuggestions(false);
+      } else {
+        setSuggestions(filtered.slice(0, 5));
+        setShowSuggestions(filtered.length > 0);
+      }
     } else {
       setSuggestions([]);
       setShowSuggestions(false);
@@ -50,6 +64,12 @@ export default function PassengerSearch({ value, onChange, placeholder }: Passen
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
+        onFocus={() => {
+          if (query.length > 0 && !passengers.some(p => p.toLowerCase() === query.toLowerCase())) {
+            setShowSuggestions(true);
+          }
+        }}
         placeholder={placeholder || "Search passenger name or ID"}
         className="w-full px-3 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 h-12"
       />
