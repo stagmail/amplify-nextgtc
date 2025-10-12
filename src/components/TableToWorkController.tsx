@@ -89,6 +89,20 @@ export default function TableToWorkController() {
     console.log('Pool selected trips:', Array.from(selectedTrips));
   }
 
+  function deleteSelectedTrips() {
+    if (selectedTrips.size === 0) {
+      alert('Please select trips to delete');
+      return;
+    }
+    
+    if (window.confirm(`Are you sure you want to delete ${selectedTrips.size} selected trip(s)?`)) {
+      selectedTrips.forEach(tripId => {
+        client.models.TransportToWork.delete({ id: tripId });
+      });
+      setSelectedTrips(new Set());
+    }
+  }
+
   useEffect(() => {
     listWorkTrips();
     loadDrivers();
@@ -119,6 +133,13 @@ export default function TableToWorkController() {
             >
               Pool Trips
             </button>
+            <button 
+              onClick={deleteSelectedTrips}
+              disabled={selectedTrips.size === 0}
+              className="px-10 py-2 bg-red-600 text-[.9rem] uppercase text-white rounded-full disabled:bg-slate-300 hover:bg-red-700"
+            >
+              Delete
+            </button>
           </div>
         </div>
 
@@ -140,13 +161,12 @@ export default function TableToWorkController() {
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup Time</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Passenger</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Assigned Driver</th>
-                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               {workTrips.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="px-3 py-4 text-sm text-gray-500 text-center">
+                  <td colSpan={7} className="px-3 py-4 text-sm text-gray-500 text-center">
                     No bookings found
                   </td>
                 </tr>
@@ -188,14 +208,6 @@ export default function TableToWorkController() {
                           </option>
                         ))}
                       </select>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
-                      <button 
-                        onClick={() => deleteWorkTrip(trip.id)}
-                        className="text-teal-600 hover:text-red-900 cursor-pointer"
-                      >
-                        Delete
-                      </button>
                     </td>
                   </tr>
                 ))
