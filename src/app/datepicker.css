@@ -58,7 +58,7 @@
 }
 
 .react-datepicker__navigation {
-  top: 13px;
+  top: 5px;
 }
 
 .react-datepicker__navigation--previous {
@@ -85,7 +85,7 @@
 
 /* Time picker improvements */
 .react-datepicker__time-list {
-  height: 200px !important;
+  height: 220px !important;
 }
 
 .react-datepicker__time-list-item {
