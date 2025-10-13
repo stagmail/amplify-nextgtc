@@ -11,6 +11,7 @@ const schema = a.schema({
       pickupTime: a.datetime().required(),
       paxNameId: a.string().required(),
       assignedDriverId: a.string(),
+      poolId: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
 
@@ -21,6 +22,7 @@ const schema = a.schema({
       pickupTime: a.datetime().required(),
       paxNameId: a.string().required(),
       assignedDriverId: a.string(),
+      poolId: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
 
@@ -49,6 +51,18 @@ const schema = a.schema({
       licenceNo: a.string().required(),
       vehicleNo: a.string().required(),
       mobileNumber: a.string().required(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+    TripPool: a.model({
+      poolName: a.string().required(),
+      tripIds: a.string().array(),
+      assignedDriverId: a.string(),
+      estimatedPickupTime: a.datetime().required(),
+      status: a.enum(['Active', 'Completed', 'Cancelled']),
+      maxCapacity: a.integer().default(3),
+      currentPassengers: a.integer().required(),
+      tripType: a.enum(['ToWork', 'ToHome']),
     })
     .authorization((allow) => [allow.publicApiKey()]),
 });

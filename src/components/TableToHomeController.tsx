@@ -7,6 +7,7 @@ import { Amplify } from "aws-amplify";
 import outputs from "../../amplify_outputs.json";
 import { HomeIcon } from '@heroicons/react/20/solid';
 import AssignDriverDialog from './AssignDriverDialog';
+import PoolTripsDialog from './PoolTripsDialog';
 
 Amplify.configure(outputs);
 
@@ -17,6 +18,7 @@ export default function TableToHomeController() {
   const [selectedTrips, setSelectedTrips] = useState<Set<string>>(new Set());
   const [drivers, setDrivers] = useState<Array<Schema["Driver"]["type"]>>([]);
   const [showAssignDialog, setShowAssignDialog] = useState(false);
+  const [showPoolDialog, setShowPoolDialog] = useState(false);
 
   function listHomeTrips() {
     client.models.TransportToHome.observeQuery().subscribe({
@@ -86,7 +88,30 @@ export default function TableToHomeController() {
   }
 
   function poolTrips() {
-    console.log('Pool selected trips:', Array.from(selectedTrips));
+    if (selectedTrips.size < 2) {
+      alert('Please select at least 2 trips to pool');
+      return;
+    }
+    if (selectedTrips.size > 3) {
+      alert('Maximum 3 trips allowed per pool');
+      return;
+    }
+    setShowPoolDialog(true);
+  }
+
+  function handlePoolingComplete() {
+    setSelectedTrips(new Set());
+  }
+
+  function getPoolStatus(trip: any) {
+    if (trip.poolId) {
+      return (
+        <span className="px-2 py-1 rounded-full text-xs bg-purple-100 text-purple-800">
+          Pooled
+        </span>
+      );
+    }
+    return null;
   }
 
   function deleteSelectedTrips() {
@@ -128,7 +153,7 @@ export default function TableToHomeController() {
             </button>
             <button 
               onClick={poolTrips}
-              disabled={selectedTrips.size < 2}
+              disabled={selectedTrips.size < 2 || selectedTrips.size > 3}
               className="px-10 py-2 bg-[#047d95] text-[.9rem] uppercase text-white rounded-full disabled:bg-slate-300"
             >
               Pool Trips
@@ -161,12 +186,13 @@ export default function TableToHomeController() {
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup Time</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Passenger</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Assigned Driver</th>
+                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               {homeTrips.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-3 py-4 text-sm text-gray-500 text-center">
+                  <td colSpan={8} className="px-3 py-4 text-sm text-gray-500 text-center">
                     No bookings found
                   </td>
                 </tr>
@@ -209,6 +235,9 @@ export default function TableToHomeController() {
                         ))}
                       </select>
                     </td>
+                    <td className="px-3 py-4 text-sm text-gray-900">
+                      {getPoolStatus(trip)}
+                    </td>
                   </tr>
                 ))
               )}
@@ -223,6 +252,14 @@ export default function TableToHomeController() {
         selectedTrips={Array.from(selectedTrips)}
         tripType="ToHome"
         onAssignmentComplete={handleAssignmentComplete}
+      />
+
+      <PoolTripsDialog
+        isOpen={showPoolDialog}
+        onClose={() => setShowPoolDialog(false)}
+        selectedTrips={Array.from(selectedTrips)}
+        tripType="ToHome"
+        onPoolingComplete={handlePoolingComplete}
       />
     </div>
   );
