@@ -4,7 +4,9 @@ import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../../amplify/data/resource";
 import AddressSearch from "./AddressSearch";
 import PassengerSearch from "./PassengerSerach";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "../app/datepicker.css";
 import { HomeIcon } from '@heroicons/react/20/solid';
 import "../app/styles.css"
 
@@ -15,9 +17,9 @@ export default function ToHomeButton() {
   const [formData, setFormData] = useState({
     pickupLocation: '',
     dropoffLocation: '',
-    pickupTime: '',
     paxNameId: '',
   });
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [loading, setLoading] = useState(false);
 
   const locationOptions = ['LocationOne', 'LocationTwo', 'LocationThree', 'LocationFour', 'LocationFive'];
@@ -27,19 +29,24 @@ export default function ToHomeButton() {
     setLoading(true);
 
     try {
+      if (!selectedDate) {
+        alert('Please select a pickup date and time');
+        return;
+      }
+
       await client.models.TransportToHome.create({
         pickupLocation: formData.pickupLocation as any,
         dropoffLocation: formData.dropoffLocation,
-        pickupTime: new Date(formData.pickupTime).toISOString(),
+        pickupTime: selectedDate.toISOString(),
         paxNameId: formData.paxNameId,
       });
 
       setFormData({
         pickupLocation: '',
         dropoffLocation: '',
-        pickupTime: '',
         paxNameId: '',
       });
+      setSelectedDate(null);
       setIsOpen(false);
     } catch (error) {
       console.error('Error creating transport:', error);
@@ -92,15 +99,24 @@ export default function ToHomeButton() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Pickup Time
+                  Pickup Date & Time
                 </label>
-                <input
-                  type="datetime-local"
-                  value={formData.pickupTime}
-                  onChange={(e) => setFormData({...formData, pickupTime: e.target.value})}
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 h-12"
-                />
+                <div className="w-full">
+                  <DatePicker
+                    selected={selectedDate}
+                    onChange={(date: Date | null) => setSelectedDate(date)}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15}
+                    dateFormat="dd/MM/yyyy HH:mm"
+                    minDate={new Date()}
+                    placeholderText="Select date and time"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 h-12"
+                    calendarClassName="custom-calendar"
+                    popperClassName="custom-popper"
+                    required
+                  />
+                </div>
               </div>
 
               <div>
