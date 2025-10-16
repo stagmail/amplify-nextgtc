@@ -21,11 +21,16 @@ function listHomeTrips() {
     });
   }
 
-  function deleteHomeTrip(id: string) {
-  if (window.confirm('Are you sure you want to delete this booking?')) {
-    client.models.TransportToHome.delete({ id });
+  async function deleteHomeTrip(id: string) {
+    if (window.confirm('Are you sure you want to delete this booking?')) {
+      try {
+        await client.models.TransportToHome.delete({ id });
+      } catch (error) {
+        console.error('Error deleting trip:', error);
+        alert('Error deleting trip. Please try again.');
+      }
+    }
   }
-}
 
   useEffect(() => {
      listHomeTrips();
