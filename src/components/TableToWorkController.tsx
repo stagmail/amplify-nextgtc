@@ -5,7 +5,7 @@ import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../../amplify/data/resource";
 import { Amplify } from "aws-amplify";
 import outputs from "../../amplify_outputs.json";
-import { BriefcaseIcon } from '@heroicons/react/20/solid';
+import { BuildingOfficeIcon } from '@heroicons/react/20/solid';
 import AssignDriverDialog from './AssignDriverDialog';
 import PoolTripsDialog from './PoolTripsDialog';
 
@@ -137,8 +137,8 @@ export default function TableToWorkController() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="mt-8">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="flex items-center text-[1rem] font-semibold bg-slate-100 px-4 py-2 gap-2 rounded-full">
-            <BriefcaseIcon aria-hidden="true" className="block size-4" />
+          <h2 className="flex items-center text-[1rem] font-semibold bg-slate-100 px-6 py-2 gap-2 rounded-lg uppercase">
+            <BuildingOfficeIcon aria-hidden="true" className="block size-4" />
             Transport To Work ( {workTrips.length} )
           </h2>
           
@@ -147,21 +147,21 @@ export default function TableToWorkController() {
             <button 
               onClick={assignDriver}
               disabled={selectedTrips.size === 0}
-              className="px-10 py-2 bg-[#047d95] text-[.9rem] uppercase text-white rounded-full disabled:bg-slate-300"
+              className="px-8 py-2 bg-[#047d95] text-[.9rem] uppercase text-white rounded-full disabled:bg-slate-300"
             >
               Assign Driver
             </button>
             <button 
               onClick={poolTrips}
               disabled={selectedTrips.size < 2 || selectedTrips.size > 3}
-              className="px-10 py-2 bg-[#047d95] text-[.9rem] uppercase text-white rounded-full disabled:bg-slate-300"
+              className="px-8 py-2 bg-[#047d95] text-[.9rem] uppercase text-white rounded-full disabled:bg-slate-300"
             >
               Pool Trips
             </button>
             <button 
               onClick={deleteSelectedTrips}
               disabled={selectedTrips.size === 0}
-              className="px-10 py-2 bg-red-600 text-[.9rem] uppercase text-white rounded-full disabled:bg-slate-300 hover:bg-red-700"
+              className="px-8 py-2 bg-red-600 text-[.9rem] uppercase text-white rounded-full disabled:bg-slate-300 hover:bg-red-700"
             >
               Delete
             </button>

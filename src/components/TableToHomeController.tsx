@@ -137,7 +137,7 @@ export default function TableToHomeController() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="mt-8">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="flex items-center text-[1rem] font-semibold bg-slate-100 px-4 py-2 gap-2 rounded-full">
+          <h2 className="flex items-center text-[1rem] font-semibold bg-slate-100 px-6 py-2 gap-2 rounded-lg uppercase">
             <HomeIcon aria-hidden="true" className="block size-4" />
             Transport To Home ( {homeTrips.length} )
           </h2>

@@ -6,7 +6,7 @@ import { Amplify } from "aws-amplify";
 import outputs from "../../amplify_outputs.json";
 import AddressSearch from "./AddressSearch";
 import PassengerSearch from "./PassengerSerach";
-import { BriefcaseIcon } from '@heroicons/react/20/solid';
+import { BuildingOfficeIcon } from '@heroicons/react/20/solid';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../app/datepicker.css";
@@ -63,7 +63,7 @@ export default function ToWorkButton() {
       <div className="block">
 
       <Button onClick={() => setIsOpen(true)} className="flex items-center justify-center py-2 px-8 m-4 bg-[#047d95] hover:bg-teal-500 mx-auto text-white rounded-full shadow-xl text-[1rem] text-center w-[300px] cursor-pointer">
-        <BriefcaseIcon aria-hidden="true" className="block size-5 m-2" />TO WORK
+        <BuildingOfficeIcon aria-hidden="true" className="block size-5 m-2" />TO WORK
       </Button>
 
       <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
