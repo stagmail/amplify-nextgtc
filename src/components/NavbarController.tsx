@@ -13,6 +13,7 @@ const navigation = [
   { name: 'Pooling', href: '/pooling', current: false },
   { name: 'Lists', href: '/listing', current: false },
   { name: 'Driver', href: '/driver', current: false },
+  { name: 'Locations', href: '/locations', current: false },
   // { name: 'Staff', href: '/staff', current: false },
   { name: 'Reports', href: '/reports', current: false },
   { name: 'Manager', href: '/', current: true },

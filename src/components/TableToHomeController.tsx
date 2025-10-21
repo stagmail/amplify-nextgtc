@@ -147,21 +147,21 @@ export default function TableToHomeController() {
             <button 
               onClick={assignDriver}
               disabled={selectedTrips.size === 0}
-              className="px-10 py-2 bg-[#047d95] text-[.9rem] uppercase text-white rounded-full disabled:bg-slate-300"
+              className="px-8 py-2 bg-[#047d95] text-[.9rem] uppercase text-white rounded-full disabled:bg-slate-300"
             >
               Assign Driver
             </button>
             <button 
               onClick={poolTrips}
               disabled={selectedTrips.size < 2 || selectedTrips.size > 3}
-              className="px-10 py-2 bg-[#047d95] text-[.9rem] uppercase text-white rounded-full disabled:bg-slate-300"
+              className="px-8 py-2 bg-[#047d95] text-[.9rem] uppercase text-white rounded-full disabled:bg-slate-300"
             >
               Pool Trips
             </button>
             <button 
               onClick={deleteSelectedTrips}
               disabled={selectedTrips.size === 0}
-              className="px-10 py-2 bg-red-600 text-[.9rem] uppercase text-white rounded-full disabled:bg-slate-300 hover:bg-red-700"
+              className="px-8 py-2 bg-red-600 text-[.9rem] uppercase text-white rounded-full disabled:bg-slate-300 hover:bg-red-700"
             >
               Delete
             </button>

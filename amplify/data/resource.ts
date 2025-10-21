@@ -54,6 +54,14 @@ const schema = a.schema({
     })
     .authorization((allow) => [allow.publicApiKey()]),
 
+    Location: a
+    .model({
+      name: a.string().required(),
+      code: a.string(),
+      isActive: a.boolean().default(true),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
     TripPool: a.model({
       poolName: a.string().required(),
       tripIds: a.string().array(),

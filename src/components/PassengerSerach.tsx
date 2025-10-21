@@ -1,6 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { generateClient } from "aws-amplify/data";
+import type { Schema } from "@/amplify/data/resource";
+
+const client = generateClient<Schema>();
 
 interface PassengerSearchProps {
   value: string;
@@ -12,21 +16,26 @@ export default function PassengerSearch({ value, onChange, placeholder }: Passen
   const [query, setQuery] = useState(value);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [staff, setStaff] = useState<Array<{ fullName: string; staffId: string }>>([]);
 
-  // Mock passenger data - replace with your actual data source
-  const passengers = [
-    "John Doe - EMP001",
-    "Jane Smith - EMP002", 
-    "Mike Johnson - EMP003",
-    "Sarah Wilson - EMP004",
-    "David Brown - EMP005",
-    "Lisa Davis - EMP006",
-    "Tom Anderson - EMP007",
-    "Emma Taylor - EMP008",
-    "James Toh - EMP009",
-    "Alvin Law - EMP010",
-    "Nicolas Burn - EMP011",
-  ];
+  // Fetch staff data from Amplify
+  useEffect(() => {
+    const fetchStaff = async () => {
+      try {
+        const { data } = await client.models.Staff.list();
+        setStaff(data.map(s => ({ fullName: s.fullName, staffId: s.staffId })));
+      } catch (error) {
+        console.error('Error fetching staff:', error);
+      }
+    };
+    fetchStaff();
+  }, []);
+
+  // Format staff data for display
+  const passengers = useMemo(() => 
+    staff.map(s => `${s.fullName} - ${s.staffId}`), 
+    [staff]
+  );
 
   useEffect(() => {
     if (query.length > 0) {
@@ -50,7 +59,7 @@ export default function PassengerSearch({ value, onChange, placeholder }: Passen
       setSuggestions([]);
       setShowSuggestions(false);
     }
-  }, [query]);
+  }, [query, passengers]);
 
   const handleSelect = (passenger: string) => {
     setQuery(passenger);

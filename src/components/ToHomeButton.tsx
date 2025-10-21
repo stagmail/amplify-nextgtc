@@ -1,5 +1,5 @@
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../../amplify/data/resource";
 import AddressSearch from "./AddressSearch";
@@ -21,8 +21,20 @@ export default function ToHomeButton() {
   });
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [loading, setLoading] = useState(false);
+  const [locations, setLocations] = useState<Array<Schema["Location"]["type"]>>([]);
 
-  const locationOptions = ['LocationOne', 'LocationTwo', 'LocationThree', 'LocationFour', 'LocationFive'];
+  useEffect(() => {
+    loadLocations();
+  }, []);
+
+  function loadLocations() {
+    client.models.Location.observeQuery().subscribe({
+      next: (data) => {
+        const activeLocations = data.items.filter(loc => loc.isActive);
+        setLocations(activeLocations);
+      },
+    });
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,8 +92,8 @@ export default function ToHomeButton() {
                   id="selectField"
                 >
                   <option value="">Select location</option>
-                  {locationOptions.map((option) => (
-                    <option key={option} value={option}>{option}</option>
+                  {locations.map((location) => (
+                    <option key={location.id} value={location.name}>{location.name}</option>
                   ))}
                 </select>
               </div>
