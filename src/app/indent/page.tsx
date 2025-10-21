@@ -1,5 +1,7 @@
 "use client";
 
+import { Amplify } from "aws-amplify";
+import outputs from "../../../amplify_outputs.json";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import Navbar from "@/components/Navbar";
 import Header from "@/components/Header";
@@ -7,6 +9,8 @@ import TableToHome from "@/components/TableToHome";
 import TableToWork from "@/components/TableToWork";
 import ToWorkButton from "@/components/ToWorkButton";
 import ToHomeButton from "@/components/ToHomeButton";
+
+Amplify.configure(outputs);
 
 export default function Page() {
     

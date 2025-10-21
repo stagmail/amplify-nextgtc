@@ -7,7 +7,7 @@ const schema = a.schema({
     TransportToWork: a
     .model({
       pickupLocation: a.string().required(),
-      dropoffLocation: a.enum(['LocationOne', 'LocationTwo', 'LocationThree', 'LocationFour', 'LocationFive']),
+      dropoffLocation: a.string().required(),
       pickupTime: a.datetime().required(),
       paxNameId: a.string().required(),
       assignedDriverId: a.string(),
@@ -17,7 +17,7 @@ const schema = a.schema({
 
     TransportToHome: a
     .model({
-      pickupLocation: a.enum(['LocationOne', 'LocationTwo', 'LocationThree', 'LocationFour', 'LocationFive']),
+      pickupLocation: a.string().required(),
       dropoffLocation: a.string().required(),
       pickupTime: a.datetime().required(),
       paxNameId: a.string().required(),
