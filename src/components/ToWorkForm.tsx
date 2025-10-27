@@ -28,6 +28,16 @@ export default function ToWorkButton() {
   const [locations, setLocations] = useState<Array<Schema["Location"]["type"]>>([]);
   const [formKey, setFormKey] = useState(0);
 
+  // Calculate form completion progress
+  const completedFields = [
+    formData.pickupLocation,
+    formData.dropoffLocation,
+    selectedDate,
+    formData.paxNameId
+  ].filter(Boolean).length;
+  const totalFields = 4;
+  const progressPercentage = (completedFields / totalFields) * 100;
+
   useEffect(() => {
     loadLocations();
   }, []);
@@ -83,74 +93,88 @@ export default function ToWorkButton() {
 
 
         <div className="inset-0 flex w-screen items-center justify-center p-2">
-          <div className="min-w-[400px] md:min-w-[500px] bg-white p-8">
-            {/* <h3 className="text-lg font-semibold mb-6 uppercase"></h3> */}
-            <form onSubmit={handleSubmit} className="space-y-7">
-
-              <div>
-                <label className="flex items-center text-sm font-medium text-gtc-hue mb-1 uppercase">
-                  <MapPinIcon aria-hidden="true" className="block size-5 m-2" /> Pickup
-                </label>
-                   <AddressSearch
-                  key={`pickup-${formKey}`}
-                  value={formData.pickupLocation}
-                  onChange={(value) => setFormData({...formData, pickupLocation: value})}
-                  placeholder="Postal Code / Address"
+          <div className="min-w-[400px] md:min-w-[980px] bg-white p-8">
+            
+            {/* Progress Bar */}
+            <div className="mb-6">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-sm font-medium text-gray-700">Progress</span>
+                <span className="text-sm text-gray-500">{completedFields}/{totalFields} </span>
+              </div>
+              <div className="bg-gray-200 rounded-full h-2">
+                <div 
+                  className="bg-gtc-sec h-2 rounded-full transition-all duration-300 ease-in-out"
+                  style={{width: `${progressPercentage}%`}}
                 />
-                
               </div>
+            </div>
 
-              <div>
-                <label className="flex items-center text-sm font-medium text-gtc-hue mb-2 uppercase"><MapPinIcon aria-hidden="true" className="block size-5 m-1" />
-                  Dropoff
-                </label>
-                <select
-                  value={formData.dropoffLocation}
-                  onChange={(e) => setFormData({...formData, dropoffLocation: e.target.value})}
-                  required
-                  className="w-full px-3 py-2 border border-slate-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 h-12 bg-none"
-                  id="selectField"
-                >
-                  <option value="">Select location</option>
-                  {locations.map((location) => (
-                    <option key={location.id} value={location.name}>{location.name}</option>
-                  ))}
-                </select>
-              </div>
+            <form onSubmit={handleSubmit} className="space-y-7">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="flex items-center text-sm font-medium text-gtc-hue mb-2 uppercase">
+                    <MapPinIcon aria-hidden="true" className="block size-5 m-1" /> Pickup
+                  </label>
+                     <AddressSearch
+                    key={`pickup-${formKey}`}
+                    value={formData.pickupLocation}
+                    onChange={(value) => setFormData({...formData, pickupLocation: value})}
+                    placeholder="Postal Code / Address"
+                  />
+                </div>
 
-              <div>
-                <label className="flex items-center text-sm font-medium text-gtc-hue mb-2 uppercase"><ClockIcon aria-hidden="true" className="block size-5 m-1" />Pickup Date & Time
-                </label>
-                <div className="w-full">
-                  <DatePicker
-                    selected={selectedDate}
-                    onChange={(date: Date | null) => setSelectedDate(date)}
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    timeIntervals={15}
-                    dateFormat="dd/MM/yyyy HH:mm"
-                    minDate={new Date()}
-                    placeholderText="Select date and time"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 h-12"
-                    calendarClassName="custom-calendar"
-                    popperClassName="custom-popper"
+                <div>
+                  <label className="flex items-center text-sm font-medium text-gtc-hue mb-2 uppercase"><MapPinIcon aria-hidden="true" className="block size-5 m-1" />
+                    Dropoff
+                  </label>
+                  <select
+                    value={formData.dropoffLocation}
+                    onChange={(e) => setFormData({...formData, dropoffLocation: e.target.value})}
                     required
+                    className="w-full px-3 py-2 border border-slate-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 h-12 bg-none"
+                    id="selectField"
+                  >
+                    <option value="">Select location</option>
+                    {locations.map((location) => (
+                      <option key={location.id} value={location.name}>{location.name}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="flex items-center text-sm font-medium text-gtc-hue mb-2 uppercase"><ClockIcon aria-hidden="true" className="block size-5 m-1" />Pickup Date & Time
+                  </label>
+                  <div className="w-full">
+                    <DatePicker
+                      selected={selectedDate}
+                      onChange={(date: Date | null) => setSelectedDate(date)}
+                      showTimeSelect
+                      timeFormat="HH:mm"
+                      timeIntervals={15}
+                      dateFormat="dd/MM/yyyy HH:mm"
+                      minDate={new Date()}
+                      placeholderText="Select date and time"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 h-12"
+                      calendarClassName="custom-calendar"
+                      popperClassName="custom-popper"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="flex items-center text-sm font-medium text-gtc-hue mb-2 uppercase"><UserIcon aria-hidden="true" className="block size-5 m-1" />Passenger Name/ID
+                  </label>
+                  <PassengerSearch
+                    key={`passenger-${formKey}`}
+                    value={formData.paxNameId}
+                    onChange={(value) => setFormData({...formData, paxNameId: value})}
+                    placeholder="Search passenger name or ID"
                   />
                 </div>
               </div>
 
-              <div>
-                <label className="flex items-center text-sm font-medium text-gtc-hue mb-2 uppercase"><UserIcon aria-hidden="true" className="block size-5 m-1" />Passenger Name/ID
-                </label>
-                <PassengerSearch
-                  key={`passenger-${formKey}`}
-                  value={formData.paxNameId}
-                  onChange={(value) => setFormData({...formData, paxNameId: value})}
-                  placeholder="Search passenger name or ID"
-                />
-              </div>
-
-              <div className="flex gap-2 mt-10">
+              <div className="flex gap-6 mt-10">
                 <button
                   type="submit"
                   disabled={loading}

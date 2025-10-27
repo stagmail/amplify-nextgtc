@@ -40,19 +40,20 @@ function listHomeTrips() {
   return (
     
 
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="max-w-[1580px] mx-auto px-4 sm:px-6 lg:px-8">
          
 
           {/* To Home Table */}
           <div className="mt-8">
-            <h2 className="flex items-center text-[1rem] font-semibold mb-4 bg-slate-100 py-2 px-4 gap-2 rounded-lg uppercase"><HomeIcon aria-hidden="true" className="block size-4" />Transport To Home ({homeTrips.length})</h2>
+            <h2 className="flex items-center text-[.85rem] text-white font-semibold mb-4 bg-gtc-tab py-2 px-4 gap-2 rounded-lg uppercase">
+              <HomeIcon aria-hidden="true" className="block size-4" />Transport To Home ( {homeTrips.length} )</h2>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead>
                   <tr>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">S/N</th>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup Location</th>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Dropoff Location</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Dropoff</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup Time</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Passenger</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Action</th>
