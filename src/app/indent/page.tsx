@@ -3,12 +3,12 @@
 import { Amplify } from "aws-amplify";
 import outputs from "../../../amplify_outputs.json";
 import { useAuthenticator } from "@aws-amplify/ui-react";
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Header from "@/components/Header";
-import TableToHome from "@/components/TableToHome";
-import TableToWork from "@/components/TableToWork";
-import ToWorkButton from "@/components/ToWorkButton";
-import ToHomeButton from "@/components/ToHomeButton";
+
+import Subhead from "@/components/Subhead";
+import { BuildingOfficeIcon, HomeIcon } from '@heroicons/react/20/solid';
 
 Amplify.configure(outputs);
 
@@ -21,27 +21,19 @@ const { user, signOut } = useAuthenticator();
     <div className="w-full min-h-screen bg-white">
     <Navbar user={user} signOut={signOut} />
     <Header name="Indent Transport" role="Duty Manager"/>
-    <div className="text-center text-[1.2rem] uppercase text-[#047d95]">Select Booking Type:</div>
+    <Subhead name="Select Booking Type:" />
 
-    <div className="flex-row md:flex p-2 gap-x-4 w-full mx-auto items-center justify-center">
-    <ToWorkButton />
-    <ToHomeButton />
+    <div className="flex-row md:flex w-full mx-auto items-center justify-center">
+
+    <div className="flex-row md:flex p-2 gap-x-2 w-[380px] md:w-[620px] mx-auto">
+
+   <Link type="button" className="flex items-center justify-center py-2 px-8 m-4 bg-[#047d95] hover:bg-teal-500 mx-auto text-white rounded-full shadow-xl text-[1rem] text-center w-auto md:w-2xl cursor-pointer" href="/towork"><BuildingOfficeIcon aria-hidden="true" className="block size-5 m-2" />TO WORK</Link>
+
+    <Link type="button" className="flex items-center justify-center py-2 px-8 m-4 bg-[#047d95] hover:bg-teal-500 mx-auto text-white rounded-full shadow-xl text-[1rem] text-center w-auto md:w-2xl cursor-pointer" href="tohome"><HomeIcon aria-hidden="true" className="block size-5 m-2" />TO HOME</Link>
     </div>
 
-    {/* <div className="md:flex p-2 gap-x-2 w-[600px] md:w-[520px] mx-auto">
-   <button className="flex items-center justify-center py-2 px-8 bg-gray-300 hover:bg-gray-400 m-4 mx-auto text-white rounded-full shadow-lg text-[1rem] text-center w-[240px]">button</button>
-
-    <button className="flex items-center justify-center py-2 px-8 bg-gray-300 hover:bg-gray-400 m-4 mx-auto text-white rounded-full shadow-lg text-[1rem] text-center w-[240px]">button</button>
-    </div> */}
-
-
-
-    <div className="w-full bg-white">
-
-      <TableToWork />
-      <TableToHome />
-          
     </div>
+
     </div>
   );
 }

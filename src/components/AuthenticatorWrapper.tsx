@@ -2,39 +2,43 @@
 
 import { Image, Authenticator, ThemeProvider, View, useTheme, Theme } from "@aws-amplify/ui-react";
 import "../app/globals.css";
+import "@aws-amplify/ui-react/styles.css";
 import "../app/styles.css"
-// import "@aws-amplify/ui-react/styles.css";
+
 
 const theme: Theme = {
   name: 'gtc-theme',
   tokens: {
     colors: {
       font: {
-        primary: {
-          value: '#171717',          
-        },
-        secondary: {
-          value: '#171717',          
-        },
-        tertiary: {
-          value: '#171717',          
-        },
+        primary: { value: '#171717' },
+        secondary: { value: '#171717' },
+        tertiary: { value: '#171717' },
       },
-      // button: {
-      //   primary: {
-      //     background: {
-      //       value: '#0ea5e9',
-      //     },
-      //     color: {
-      //       value: '#ffffff',
-      //     },
-      //     hover: {  },
-      //   }
-      // }
+      brand: {
+        primary: {
+          10: { value: '#f0f9ff' },
+          80: { value: '#047d95' },
+          90: { value: '#0369a1' },
+          100: { value: '#0284c7' },
+        }
+      },
+    },
+
+    components: {
+      authenticator: {
+        router: {
+          boxShadow: { value: '0 0 16px rgba(0, 0, 0, 0.1)' },
+          borderWidth: { value: '0' },
+        },
+        form: {
+          padding: { value: '2rem' },
+        }
+      }
     }
   }
-
 };
+
 
 const Components = {
   

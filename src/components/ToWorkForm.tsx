@@ -1,4 +1,3 @@
-import { Dialog, DialogBackdrop, DialogPanel, Button } from '@headlessui/react'
 
 import { useState, useEffect } from 'react'
 import { generateClient } from "aws-amplify/data";
@@ -7,18 +6,18 @@ import { Amplify } from "aws-amplify";
 import outputs from "../../amplify_outputs.json";
 import AddressSearch from "./AddressSearch";
 import PassengerSearch from "./PassengerSerach";
-import { BuildingOfficeIcon } from '@heroicons/react/20/solid';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../app/datepicker.css";
 import "../app/styles.css"
+import { MapPinIcon, ClockIcon, UserIcon } from '@heroicons/react/24/outline';
+
 
 Amplify.configure(outputs);
 
 const client = generateClient<Schema>();
 
 export default function ToWorkButton() {
-  let [isOpen, setIsOpen] = useState(false)
   const [formData, setFormData] = useState({
     pickupLocation: '',
     dropoffLocation: '',
@@ -27,6 +26,7 @@ export default function ToWorkButton() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [loading, setLoading] = useState(false);
   const [locations, setLocations] = useState<Array<Schema["Location"]["type"]>>([]);
+  const [formKey, setFormKey] = useState(0);
 
   useEffect(() => {
     loadLocations();
@@ -45,12 +45,13 @@ export default function ToWorkButton() {
     e.preventDefault();
     setLoading(true);
 
-    try {
-      if (!selectedDate) {
-        alert('Please select a pickup date and time');
-        return;
-      }
+    if (!selectedDate) {
+      alert('Please select a pickup date and time');
+      setLoading(false);
+      return;
+    }
 
+    try {
       await client.models.TransportToWork.create({
         pickupLocation: formData.pickupLocation,
         dropoffLocation: formData.dropoffLocation as any,
@@ -58,13 +59,8 @@ export default function ToWorkButton() {
         paxNameId: formData.paxNameId,
       });
 
-      setFormData({
-        pickupLocation: '',
-        dropoffLocation: '',
-        paxNameId: '',
-      });
-      setSelectedDate(null);
-      setIsOpen(false);
+      // Clear form only after successful submission
+      clearAllFields();
     } catch (error) {
       console.error('Error creating transport:', error);
     } finally {
@@ -72,25 +68,31 @@ export default function ToWorkButton() {
     }
   };
 
+  const clearAllFields = () => {
+    setFormData({
+      pickupLocation: '',
+      dropoffLocation: '',
+      paxNameId: '',
+    });
+    setSelectedDate(null);
+    setFormKey(prev => prev + 1); // Force component remount
+  };
+
   return (
       <div className="block">
 
-      <Button onClick={() => setIsOpen(true)} className="flex items-center justify-center py-2 px-8 m-4 bg-[#047d95] hover:bg-teal-500 mx-auto text-white rounded-full shadow-xl text-[1rem] text-center w-[300px] cursor-pointer">
-        <BuildingOfficeIcon aria-hidden="true" className="block size-5 m-2" />TO WORK
-      </Button>
 
-      <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
-        <DialogBackdrop className="fixed inset-0 bg-black/80" />
-        <div className="fixed inset-0 flex w-screen items-center justify-center p-2">
-          <DialogPanel className="min-w-[400px] md:min-w-[500px] bg-white p-8">
-            <h3 className="text-lg font-semibold mb-6 uppercase">Transport To Work</h3>
-            <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="inset-0 flex w-screen items-center justify-center p-2">
+          <div className="min-w-[400px] md:min-w-[500px] bg-white p-8">
+            {/* <h3 className="text-lg font-semibold mb-6 uppercase"></h3> */}
+            <form onSubmit={handleSubmit} className="space-y-7">
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Pickup Location
+                <label className="flex items-center text-sm font-medium text-gtc-hue mb-1 uppercase">
+                  <MapPinIcon aria-hidden="true" className="block size-5 m-2" /> Pickup
                 </label>
                    <AddressSearch
+                  key={`pickup-${formKey}`}
                   value={formData.pickupLocation}
                   onChange={(value) => setFormData({...formData, pickupLocation: value})}
                   placeholder="Postal Code / Address"
@@ -99,8 +101,8 @@ export default function ToWorkButton() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Dropoff Location
+                <label className="flex items-center text-sm font-medium text-gtc-hue mb-2 uppercase"><MapPinIcon aria-hidden="true" className="block size-5 m-1" />
+                  Dropoff
                 </label>
                 <select
                   value={formData.dropoffLocation}
@@ -117,8 +119,7 @@ export default function ToWorkButton() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Pickup Date & Time
+                <label className="flex items-center text-sm font-medium text-gtc-hue mb-2 uppercase"><ClockIcon aria-hidden="true" className="block size-5 m-1" />Pickup Date & Time
                 </label>
                 <div className="w-full">
                   <DatePicker
@@ -139,10 +140,10 @@ export default function ToWorkButton() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Passenger Name/ID
+                <label className="flex items-center text-sm font-medium text-gtc-hue mb-2 uppercase"><UserIcon aria-hidden="true" className="block size-5 m-1" />Passenger Name/ID
                 </label>
                 <PassengerSearch
+                  key={`passenger-${formKey}`}
                   value={formData.paxNameId}
                   onChange={(value) => setFormData({...formData, paxNameId: value})}
                   placeholder="Search passenger name or ID"
@@ -159,16 +160,15 @@ export default function ToWorkButton() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setIsOpen(false)}
+                  onClick={clearAllFields}
                   className="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-full hover:bg-gray-400 text-[.9rem]"
                 >
-                  Cancel
+                  Clear All
                 </button>
               </div>
             </form>
-          </DialogPanel>
+          </div>
         </div>
-      </Dialog>
     </div>
   )
 }

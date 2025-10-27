@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Geist } from "next/font/google";
+
+import { Geist, Geist_Mono } from "next/font/google";
 import AuthenticatorWrapper from "../components/AuthenticatorWrapper";
 import Footer from "@/components/Footer";
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
@@ -24,8 +29,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${geistSans.variable}`}>
-        <AuthenticatorWrapper>
+      <body
+        className={`${geistMono.variable} ${geistSans.variable}`}
+      >        <AuthenticatorWrapper>
         {children}
         <Footer />
         </AuthenticatorWrapper>

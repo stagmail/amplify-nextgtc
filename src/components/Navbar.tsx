@@ -9,7 +9,7 @@ type NavbarProps = {
 };
 
 const navigation = [
-  { name: 'Dashboard', href: '/controller', current: false },
+  { name: 'Dashboard', href: '/', current: false },
   { name: 'Indent', href: '/indent', current: false },
   { name: 'Lists', href: '/listing', current: false },
   { name: 'Staff', href: '/staff', current: false },
@@ -26,7 +26,7 @@ export default function Navbar({ user, signOut }: NavbarProps) {
   return (
     <>
       <div className="w-full">
-        <Disclosure as="nav" className="bg-slate-200">
+        <Disclosure as="nav" className="bg-gtc-bac">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-18 items-center justify-between">
               <div className="flex items-center">
@@ -49,7 +49,7 @@ export default function Navbar({ user, signOut }: NavbarProps) {
                         aria-current={item.current ? 'page' : undefined}
                         className={classNames(
                           item.current ? 'text-slate-400' : 'text-slate-800 hover:bg-white/5 hover:text-slate-300',
-                          'rounded-md px-3 py-2 text-sm font-normal uppercase',
+                          'rounded-md px-3 py-2 text-sm font-normal uppercase ',
                         )}
                       >
                         {item.name}
@@ -71,7 +71,7 @@ export default function Navbar({ user, signOut }: NavbarProps) {
 
 {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
-                    <MenuButton className="relative flex cursor-pointer max-w-xs items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400 hover:bg-amber-300">
+                    <MenuButton className="relative flex cursor-pointer max-w-xs items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gtc-sec hover:bg-amber-300">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
                       <UserCircleIcon className="size-8 text-slate-600" />
@@ -90,7 +90,7 @@ export default function Navbar({ user, signOut }: NavbarProps) {
                           <div
                             className="block px-4 py-2 text-[.9rem] text-slate-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                           >
-                               <a className="px-5 py-2 text-slate-100 bg-amber-500 data-focus:bg-slate-100 data-focus:outline-hidden rounded-full pointer-events-auto" href="#"
+                               <a className="px-5 py-2 text-slate-100 bg-gtc-sec data-focus:bg-slate-100 data-focus:outline-hidden rounded-full pointer-events-auto" href="#"
                           onClick={signOut}>Sign Out</a>
                           </div>
                        
@@ -101,7 +101,7 @@ export default function Navbar({ user, signOut }: NavbarProps) {
 
 {/* Mobile menu button */}
               <div className="-mr-2 flex md:hidden">
-                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-slate-500 hover:bg-white/5 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-amber-400">
+                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-slate-500 hover:bg-white/5 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-gtc-sec">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
                   <Bars3Icon aria-hidden="true" className="block size-6 group-data-open:hidden" />
@@ -148,13 +148,13 @@ export default function Navbar({ user, signOut }: NavbarProps) {
 
       {/* mobile userNavigation */}
                 <div className="mt-3 space-y-1 px-5">
-                  <div className="text-base/5 font-[.9rem] text-teal-700">{user?.signInDetails?.loginId}</div>
+                  <div className="text-base/5 font-[.9rem] text-gtc-hue">{user?.signInDetails?.loginId}</div>
                   {/* <button onClick={signOut}>Sign Out</button> */}
                   {/* <div className="text-sm font-medium text-gray-400">{user?.signInDetails?.loginId}</div> */}
                 </div>
 
               <div className="mt-3 space-y-1 px-5 pb-4">
-              <button className="block px-4 py-2 text-[.6rem] text-slate-100 bg-teal-600 data-focus:bg-slate-100 data-focus:outline-hidden rounded-lg pointer-events-auto" 
+              <button className="block px-4 py-2 text-[.6rem] text-slate-100 bg-gtc-hue data-focus:bg-slate-100 data-focus:outline-hidden rounded-lg pointer-events-auto" 
                           onClick={signOut}>Sign Out</button>
               </div>
             </div>

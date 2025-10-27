@@ -6,6 +6,7 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import DashboardTilesDM from "../components/DashboardTilesDM";
 import Navbar from "@/components/Navbar";
 import Header from "@/components/Header";
+import Subhead from "@/components/Subhead";
 
 Amplify.configure(outputs);
 
@@ -15,10 +16,10 @@ export default function Page() {
 
   return (
     <>
-    <div className="w-full h-full bg-white">
+    <div className="w-full min-h-screen bg-white">
     <Navbar user={user} signOut={signOut} />
     <Header name="Dashboard" role="Duty Manager"/>
-    <div className="text-center text-[.9rem] uppercase text-[#047d95]">Get Started:</div>
+    <Subhead name="Get Started:" />
     <DashboardTilesDM />
     </div>
     </>

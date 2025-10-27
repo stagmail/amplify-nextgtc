@@ -3,16 +3,17 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --amplify-fonts-default-variable:
-  'Geist', -apple-system, 
 }
 
-/* @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-} */
+
+@theme {
+  --font-family-mono: var(--font-geist-mono), system-ui, sans-serif;
+  --font-family-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --color-gtc-hue: #047d95;
+  --color-gtc-bac: oklch(92.9% 0.013 255.508);
+  --color-gtc-sec: #FAAB00;
+}
+
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -24,8 +25,19 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Geist;
+  font-family: var(--font-geist-sans), system-ui, sans-serif !important;
 }
+
+* {
+  font-family: var(--font-geist-mono), system-ui, monospace !important;
+}
+* {
+  font-family: var(--font-geist-sans), system-ui, sans-serif !important;
+}
+
+
+
+
 
 
 
