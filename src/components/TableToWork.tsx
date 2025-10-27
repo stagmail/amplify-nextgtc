@@ -53,7 +53,7 @@ Transport To Work - ( {workTrips.length} )</h2>
               <table className="min-w-full divide-y divide-gray-300">
                 <thead>
                   <tr>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">S/N</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">S/n</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Dropoff</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup Time</th>

@@ -46,12 +46,12 @@ function listHomeTrips() {
           {/* To Home Table */}
           <div className="mt-8">
             <h2 className="flex items-center text-[.85rem] text-white font-semibold mb-4 bg-gtc-tab py-2 px-4 gap-2 rounded-lg uppercase">
-              <HomeIcon aria-hidden="true" className="block size-4" />Transport To Home ( {homeTrips.length} )</h2>
+              <HomeIcon aria-hidden="true" className="block size-4" />Transport To Home - ( {homeTrips.length} )</h2>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead>
                   <tr>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">S/N</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">S/n</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Dropoff</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup Time</th>

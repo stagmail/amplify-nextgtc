@@ -9,7 +9,6 @@ import TableToWork from "@/components/TableToWork";
 import ToWorkForm from "@/components/ToWorkForm";
 import ToWorkButton from "@/components/ToWorkButton";
 import ToHomeButton from "@/components/ToHomeButton";
-import Subhead from "@/components/Subhead";
 
 
 Amplify.configure(outputs);
@@ -23,7 +22,7 @@ const { user, signOut } = useAuthenticator();
     <div className="w-full min-h-screen bg-white">
     <Navbar user={user} signOut={signOut} />
     <Header name="Indent Transport" role="Duty Manager"/>
-    <Subhead name="Transport To Work" />
+
     <div className="flex-row md:flex w-full mx-auto items-center justify-center">
     <ToWorkForm />
     </div>

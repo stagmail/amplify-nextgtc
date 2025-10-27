@@ -11,6 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "../app/datepicker.css";
 import "../app/styles.css"
 import { MapPinIcon, ClockIcon, UserIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
 
 
 Amplify.configure(outputs);
@@ -92,8 +93,34 @@ export default function ToWorkButton() {
       <div className="block">
 
 
-        <div className="inset-0 flex w-screen items-center justify-center p-2">
-          <div className="min-w-[400px] md:min-w-[980px] bg-white p-8">
+        <div className="inset-0 flex w-screen items-center justify-center mb-8">
+          <div className="min-w-[400px] md:min-w-[950px] bg-white p-4">
+          
+          {/* subhead */}
+          <div className="flex-row md:flex gap-4 items-center mb-8">
+
+            <div className="text-left text-[1.2rem] uppercase text-gtc-hue">Transport To Work</div>
+
+            <div className="block text-[1.2rem] uppercase text-rose-400 font-extralight">
+              {new Date().toLocaleDateString('en-SG', { 
+              day: '2-digit', 
+              month: 'long', 
+              year: 'numeric',
+              timeZone: 'Asia/Singapore'
+            })}
+          </div>
+
+          <div className="flex gap-2 ml-auto">
+            <Link href="/towork" 
+            className="text-sm bg-gray-200 text-white py-2 px-12 rounded-full font-semibold" aria-disabled>TO WORK
+            </Link>
+
+            <Link href="/tohome" 
+            className="text-sm bg-gtc-hue text-white py-2 px-12 rounded-full hover:bg-teal-500 font-semibold">TO HOME
+            </Link>
+          </div>
+
+          </div>
             
             {/* Progress Bar */}
             <div className="mb-6">
