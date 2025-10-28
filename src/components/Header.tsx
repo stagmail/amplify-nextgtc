@@ -10,7 +10,7 @@ export default function Header({ name, role }: HeaderProps) {
   
   return (
     <header className="relative bg-white border-gray-200 border-b-1 mb-12 uppercase items-center">
-      <div className="flex mx-auto max-w-7xl justify-between items-center px-4 md:px-8 h-14">
+      <div className="flex mx-auto w-full justify-between items-center px-4 md:px-8 h-14">
         <h1 className="text-base font-semibold tracking-tight text-gtc-hue font-mono">
           {name}
         </h1>

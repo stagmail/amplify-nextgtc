@@ -10,7 +10,7 @@ type NavbarProps = {
 
 const navigation = [
   { name: 'Dashboard', href: '/', current: false },
-  { name: 'Indent', href: '/indent', current: false },
+  { name: 'Indent', href: '/towork', current: false },
   { name: 'Lists', href: '/listing', current: false },
   { name: 'Staff', href: '/staff', current: false },
   { name: 'Reports', href: '/reports', current: false },
@@ -27,7 +27,7 @@ export default function Navbar({ user, signOut }: NavbarProps) {
     <>
       <div className="w-full fixed top-0 z-50">
         <Disclosure as="nav" className="bg-gtc-bac">
-          <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <div className="mx-auto w-full px-4 md:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="shrink-0">
@@ -48,8 +48,8 @@ export default function Navbar({ user, signOut }: NavbarProps) {
                         href={item.href}
                         aria-current={item.current ? 'page' : undefined}
                         className={classNames(
-                          item.current ? 'text-slate-400' : 'text-slate-800 hover:bg-white/5 hover:text-slate-300',
-                          'rounded-md px-3 py-2 text-sm font-normal uppercase ',
+                          item.current ? 'text-slate-400' : 'text-slate-600 hover:bg-white/5 hover:text-slate-300',
+                          'rounded-md px-2 py-2 text-[.82rem] font-semibold uppercase ',
                         )}
                       >
                         {item.name}

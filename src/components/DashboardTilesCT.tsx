@@ -1,4 +1,4 @@
-import { UserPlusIcon, TableCellsIcon, MapPinIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/20/solid'
+import { UserPlusIcon, MapPinIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/20/solid'
 import Link from 'next/link';
 
 

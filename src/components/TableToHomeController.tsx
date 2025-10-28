@@ -134,10 +134,10 @@ export default function TableToHomeController() {
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="max-w-[1560] mx-auto px-4 sm:px-6 lg:px-8">
       <div className="mt-8">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="flex items-center text-[1rem] font-semibold bg-slate-100 px-6 py-2 gap-2 rounded-lg uppercase">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="flex items-center text-[.85rem] text-gray-700 font-semibold bg-gray-100 py-2 px-4 gap-2 rounded-lg uppercase">
             <HomeIcon aria-hidden="true" className="block size-4" />
             Transport To Home ( {homeTrips.length} )
           </h2>
@@ -181,8 +181,8 @@ export default function TableToHomeController() {
                   />
                 </th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">S/N</th>
-                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup Location</th>
-                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Dropoff Location</th>
+                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup</th>
+                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Dropoff</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup Time</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Passenger</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Assigned Driver</th>
@@ -211,16 +211,18 @@ export default function TableToHomeController() {
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.pickupLocation}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.dropoffLocation}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 uppercase">
-                      {new Date(trip.pickupTime).toLocaleDateString('en-GB', { 
-                        day: '2-digit', 
-                        month: 'short', 
-                        year: 'numeric' 
-                      })} {new Date(trip.pickupTime).toLocaleTimeString('en-GB', {
-                        hour: '2-digit',
-                        minute: '2-digit'
-                      })}
+                      {trip.pickupTime ? (
+                        `${new Date(trip.pickupTime).toLocaleDateString('en-GB', { 
+                          day: '2-digit', 
+                          month: 'short', 
+                          year: 'numeric' 
+                        })} ${new Date(trip.pickupTime).toLocaleTimeString('en-GB', {
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        })}`
+                      ) : 'No time set'}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.paxNameId}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{String(trip.paxNameId || 'N/A')}</td>
                     <td className="px-3 py-4 text-sm text-gray-900">
                       <select
                         value={trip.assignedDriverId || 'UNASSIGN'}
@@ -230,7 +232,7 @@ export default function TableToHomeController() {
                         <option value="UNASSIGN">Unassigned</option>
                         {drivers.map((driver) => (
                           <option key={driver.id} value={driver.id}>
-                            {driver.fullName} - {driver.vehicleNo}
+                            {String(driver.fullName || 'Unknown')} - {String(driver.vehicleNo || 'N/A')}
                           </option>
                         ))}
                       </select>

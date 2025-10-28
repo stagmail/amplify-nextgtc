@@ -46,7 +46,7 @@ function listWorkTrips() {
     <div className="max-w-[1580px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* To Work Table */}
           <div className="mt-8">
-            <h2 className="flex items-center text-[.85rem] text-white font-semibold mb-4 bg-gtc-tab py-2 px-4 gap-2 rounded-lg uppercase">
+            <h2 className="flex items-center text-[.85rem] text-gray-700 font-semibold mb-4 bg-gray-100 py-2 px-4 gap-2 rounded-lg uppercase">
               <BuildingOfficeIcon aria-hidden="true" className="block size-4" />
 Transport To Work - ( {workTrips.length} )</h2>
             <div className="overflow-x-auto">
@@ -58,13 +58,14 @@ Transport To Work - ( {workTrips.length} )</h2>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Dropoff</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup Time</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Passenger</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Action</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {workTrips.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="px-3 py-4 text-sm text-gray-500 text-center">
+                      <td colSpan={7} className="px-3 py-4 text-sm text-gray-500 text-center">
                         No bookings found
                       </td>
                     </tr>
@@ -85,6 +86,13 @@ Transport To Work - ( {workTrips.length} )</h2>
                 })}
               </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.paxNameId}</td>
+                      <td className="px-3 py-4 text-sm text-gray-900">
+                        {trip.poolId ? (
+                          <span className="px-2 py-1 rounded-full text-xs bg-purple-100 text-purple-800">
+                            Pooled
+                          </span>
+                        ) : null}
+                      </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
                         <button 
                           onClick={() => deleteWorkTrip(trip.id)}
