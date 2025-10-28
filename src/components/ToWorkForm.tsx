@@ -63,11 +63,13 @@ export default function ToWorkButton() {
     }
 
     try {
-      await client.models.TransportToWork.create({
+      await client.models.QueueToWork.create({
         pickupLocation: formData.pickupLocation,
         dropoffLocation: formData.dropoffLocation as any,
         pickupTime: selectedDate.toISOString(),
         paxNameId: formData.paxNameId,
+        dutyManagerId: 'current-user', // Replace with actual user ID
+        batchId: new Date().toISOString().split('T')[0], // Daily batch
       });
 
       // Clear form only after successful submission

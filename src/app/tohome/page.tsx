@@ -5,10 +5,9 @@ import outputs from "../../../amplify_outputs.json";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import Navbar from "@/components/Navbar";
 import Header from "@/components/Header";
-import TableToHome from "@/components/TableToHome";
+import QueueToHome from "@/components/QueueToHome";
 import ToHomeForm from "@/components/ToHomeForm";
-import ToWorkButton from "@/components/ToWorkButton";
-import ToHomeButton from "@/components/ToHomeButton";
+
 
 Amplify.configure(outputs);
 
@@ -32,7 +31,7 @@ const { user, signOut } = useAuthenticator();
 
     <div className="w-full bg-white">
 
-      <TableToHome />
+      <QueueToHome />
           
     </div>
     </div>

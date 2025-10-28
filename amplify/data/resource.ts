@@ -73,6 +73,28 @@ const schema = a.schema({
       tripType: a.enum(['ToWork', 'ToHome']),
     })
     .authorization((allow) => [allow.publicApiKey()]),
+
+    QueueToWork: a
+    .model({
+      pickupLocation: a.string().required(),
+      dropoffLocation: a.string().required(),
+      pickupTime: a.datetime().required(),
+      paxNameId: a.string().required(),
+      dutyManagerId: a.string().required(),
+      batchId: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+
+    QueueToHome: a
+    .model({
+      pickupLocation: a.string().required(),
+      dropoffLocation: a.string().required(),
+      pickupTime: a.datetime().required(),
+      paxNameId: a.string().required(),
+      dutyManagerId: a.string().required(),
+      batchId: a.string(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
 });
 
 

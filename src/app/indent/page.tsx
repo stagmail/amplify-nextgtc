@@ -25,11 +25,11 @@ const { user, signOut } = useAuthenticator();
 
     <div className="flex-row md:flex w-full mx-auto items-center justify-center">
 
-    <div className="flex-row md:flex p-2 gap-x-2 w-[380px] md:w-[620px] mx-auto">
+    <div className="flex-row md:flex p-2 gap-x-2 w-[380px] md:w-[620px] mx-auto mt-8">
 
-   <Link type="button" className="flex items-center justify-center py-2 px-8 m-4 bg-[#047d95] hover:bg-teal-500 mx-auto text-white rounded-full shadow-xl text-[1rem] text-center w-auto md:w-2xl cursor-pointer" href="/towork"><BuildingOfficeIcon aria-hidden="true" className="block size-5 m-2" />TO WORK</Link>
+   <Link type="button" className="flex items-center justify-center py-2 px-8 m-4 bg-gtc-hue hover:bg-teal-500 mx-auto text-white rounded-full shadow-xl text-[1rem] text-center w-auto md:w-2xl cursor-pointer" href="/towork"><BuildingOfficeIcon aria-hidden="true" className="block size-5 m-2" />TO WORK</Link>
 
-    <Link type="button" className="flex items-center justify-center py-2 px-8 m-4 bg-[#047d95] hover:bg-teal-500 mx-auto text-white rounded-full shadow-xl text-[1rem] text-center w-auto md:w-2xl cursor-pointer" href="tohome"><HomeIcon aria-hidden="true" className="block size-5 m-2" />TO HOME</Link>
+    <Link type="button" className="flex items-center justify-center py-2 px-8 m-4 bg-gtc-hue hover:bg-teal-500 mx-auto text-white rounded-full shadow-xl text-[1rem] text-center w-auto md:w-2xl cursor-pointer" href="tohome"><HomeIcon aria-hidden="true" className="block size-5 m-2" />TO HOME</Link>
     </div>
 
     </div>

@@ -62,11 +62,13 @@ export default function ToHomeButton() {
     }
 
     try {
-      await client.models.TransportToHome.create({
+      await client.models.QueueToHome.create({
         pickupLocation: formData.pickupLocation as any,
         dropoffLocation: formData.dropoffLocation,
         pickupTime: selectedDate.toISOString(),
         paxNameId: formData.paxNameId,
+        dutyManagerId: 'current-user', // Replace with actual user ID
+        batchId: new Date().toISOString().split('T')[0], // Daily batch
       });
 
       // Clear form only after successful submission
@@ -128,7 +130,7 @@ export default function ToHomeButton() {
             <div className="mb-6">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-sm font-medium text-gray-700">Progress</span>
-                <span className="text-sm text-gray-500">{completedFields}/{totalFields} </span>
+                <span className="text-sm text-gray-500">{completedFields}/{totalFields}</span>
               </div>
               <div className="bg-gray-200 rounded-full h-2">
                 <div 

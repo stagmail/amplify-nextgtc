@@ -25,10 +25,10 @@ function classNames(...classes: (string | undefined | null | false)[]): string {
 export default function Navbar({ user, signOut }: NavbarProps) {
   return (
     <>
-      <div className="w-full">
+      <div className="w-full fixed top-0 z-50">
         <Disclosure as="nav" className="bg-gtc-bac">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex h-18 items-center justify-between">
+          <div className="mx-auto max-w-7xl px-4 md:px-8">
+            <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="shrink-0">
                   <Image
@@ -163,6 +163,7 @@ export default function Navbar({ user, signOut }: NavbarProps) {
         </Disclosure>
 
       </div>
+      <div className="h-16"></div>
     </>
   )
 }
