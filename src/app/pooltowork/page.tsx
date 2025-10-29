@@ -3,7 +3,6 @@
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import NavbarController from "@/components/NavbarController";
 import Header from "@/components/Header";
-import TableToHomeController from "@/components/TableToHomeController";
 import TableToWorkController from "@/components/TableToWorkController";
 
 
@@ -25,7 +24,6 @@ const { user, signOut } = useAuthenticator();
 
       <TableToWorkController />
       <div className="p-6"></div>
-      <TableToHomeController />
           
     </div>
     </div>

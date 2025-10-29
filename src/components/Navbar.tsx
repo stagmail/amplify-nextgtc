@@ -49,7 +49,7 @@ export default function Navbar({ user, signOut }: NavbarProps) {
                         aria-current={item.current ? 'page' : undefined}
                         className={classNames(
                           item.current ? 'text-slate-400' : 'text-slate-600 hover:bg-white/5 hover:text-slate-300',
-                          'rounded-md px-2 py-2 text-[.82rem] font-semibold uppercase ',
+                          'rounded-md px-2 py-2 text-[.8rem] font-semibold uppercase ',
                         )}
                       >
                         {item.name}

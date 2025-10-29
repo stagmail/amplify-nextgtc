@@ -10,7 +10,7 @@ type NavbarProps = {
 
 const navigation = [
   { name: 'Dashboard', href: '/controller', current: false },
-  { name: 'Pooling', href: '/pooling', current: false },
+  { name: 'Pooling', href: '/pooltowork', current: false },
   { name: 'Lists', href: '/listing', current: false },
   { name: 'Driver', href: '/driver', current: false },
   { name: 'Locations', href: '/locations', current: false },
@@ -51,7 +51,7 @@ export default function NavbarController({ user, signOut }: NavbarProps) {
                         aria-current={item.current ? 'page' : undefined}
                         className={classNames(
                           item.current ? 'text-slate-400' : 'text-slate-600 hover:bg-white/5 hover:text-slate-300',
-                          'rounded-md px-2 py-2 text-[.82rem] font-semibold uppercase',
+                          'rounded-md px-2 py-2 text-[.8rem] font-semibold uppercase',
                         )}
                       >
                         {item.name}

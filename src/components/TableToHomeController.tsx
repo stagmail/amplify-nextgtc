@@ -5,9 +5,10 @@ import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../../amplify/data/resource";
 import { Amplify } from "aws-amplify";
 import outputs from "../../amplify_outputs.json";
-import { HomeIcon } from '@heroicons/react/20/solid';
+import { HomeIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import AssignDriverDialog from './AssignDriverDialog';
 import PoolTripsDialog from './PoolTripsDialog';
+import Link from "next/link";
 
 Amplify.configure(outputs);
 
@@ -136,6 +137,33 @@ export default function TableToHomeController() {
   return (
     <div className="max-w-[1560] mx-auto px-4 sm:px-6 lg:px-8">
       <div className="mt-8">
+
+{/* subhead */}
+          <div className="flex-row md:flex gap-4 items-center mb-12">
+
+            <div className="text-left text-[1.2rem] uppercase text-gtc-hue">Pool Transport To Home</div>
+
+            <div className="block text-[1.2rem] uppercase text-rose-400 font-extralight">
+              {new Date().toLocaleDateString('en-SG', { 
+              day: '2-digit', 
+              month: 'long', 
+              year: 'numeric',
+              timeZone: 'Asia/Singapore'
+            })}
+          </div>
+
+            <div className="flex items-center ml-auto">
+            <Link href="pooltowork"
+            className="text-xs bg-gtc-hue text-white w-[110px] tracking-wide py-2 rounded-l-full font-light hover:bg-teal-500 text-center items-center flex justify-center"><ChevronRightIcon className="block size-4 -ml-2" /> TO WORK
+            </Link>
+
+            <div
+            className="text-xs bg-gray-200 text-white w-[110px] tracking-wide py-2 rounded-r-full font-light text-center">TO HOME
+            </div>
+          </div>
+
+          </div>
+
         <div className="flex justify-between items-center mb-8">
           <h2 className="flex items-center text-[.85rem] text-gray-700 font-semibold bg-gray-100 py-2 px-4 gap-2 rounded-lg uppercase">
             <HomeIcon aria-hidden="true" className="block size-4" />

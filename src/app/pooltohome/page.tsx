@@ -4,7 +4,6 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import NavbarController from "@/components/NavbarController";
 import Header from "@/components/Header";
 import TableToHomeController from "@/components/TableToHomeController";
-import TableToWorkController from "@/components/TableToWorkController";
 
 
 export default function Page() {
@@ -23,8 +22,6 @@ const { user, signOut } = useAuthenticator();
 
     <div className="w-full bg-white">
 
-      <TableToWorkController />
-      <div className="p-6"></div>
       <TableToHomeController />
           
     </div>
