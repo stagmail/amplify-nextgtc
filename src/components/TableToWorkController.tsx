@@ -155,11 +155,12 @@ export default function TableToWorkController() {
       <div className="mt-2">
 
  {/* subhead */}
-          <div className="flex-row md:flex gap-4 items-center mb-12">
+          <div className="flex-row md:flex gap-3 items-center mb-12">
 
-            <div className="text-left text-[1.2rem] uppercase text-gtc-hue">Pool Transport To Work</div>
+            <div className="text-left uppercase text-[1.1rem] font-semibold text-gtc-hue">
+            <span className='font-light'>Pool Transport</span> To Work</div>
 
-            <div className="block text-[1.2rem] uppercase text-rose-400 font-extralight">
+            <div className="block text-[1.1rem] uppercase text-rose-500 font-extralight">
               {new Date().toLocaleDateString('en-SG', { 
               day: '2-digit', 
               month: 'long', 

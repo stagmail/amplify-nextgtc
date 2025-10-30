@@ -34,8 +34,8 @@ export default function Navbar({ user, signOut }: NavbarProps) {
                   <Image
                     alt="GTC"
                     src="./logo-rd.svg"
-                    width="36"
-                    height="36"
+                    width="35"
+                    height="35"
                   />
                 </div>
                 

@@ -97,11 +97,16 @@ export default function ToHomeButton() {
           <div className="min-w-[400px] md:min-w-[950px] bg-white p-4">
            
           {/* subhead */}
-          <div className="flex-row md:flex gap-4 items-center mb-8">
+          <div className="flex-row md:flex gap-3 items-center mb-8">
 
-            <div className="text-left text-[1.2rem] uppercase text-gtc-hue">Transport To Home</div>
+            {/* <div className="flex text-left uppercase">
+            <span className='text-[1.2rem] font-light'>Transport </span> 
+            <div className="text-[1.2rem] font-semibold uppercase text-gtc-hue mt-0"> To Home</div></div> */}
 
-            <div className="block text-[1.2rem] uppercase text-rose-400 font-extralight">
+            <div className="text-left uppercase text-[1.1rem] font-semibold text-gtc-hue">
+            <span className='font-light'>Transport</span> To Home</div>
+
+            <div className="block text-[1.1rem] uppercase text-rose-500 font-extralight">
               {new Date().toLocaleDateString('en-SG', { 
               day: '2-digit', 
               month: 'long', 
