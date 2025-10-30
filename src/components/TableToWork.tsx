@@ -5,7 +5,7 @@ import { generateClient } from "aws-amplify/data";
 import type { Schema } from "../../amplify/data/resource";
 import { Amplify } from "aws-amplify";
 import outputs from "../../amplify_outputs.json";
-import { BriefcaseIcon, BuildingOfficeIcon } from '@heroicons/react/20/solid';
+import { BuildingOfficeIcon } from '@heroicons/react/20/solid';
 
 
 Amplify.configure(outputs);
@@ -16,12 +16,26 @@ export default function TableToWork() {
     
 
 const [workTrips, setWorkTrips] = useState<Array<Schema["TransportToWork"]["type"]>>([]);
+const [staff, setStaff] = useState<Array<Schema["Staff"]["type"]>>([]);
 
 
 function listWorkTrips() {
     client.models.TransportToWork.observeQuery().subscribe({
       next: (data) => setWorkTrips([...data.items]),
     });
+  }
+
+  function loadStaff() {
+    client.models.Staff.observeQuery().subscribe({
+      next: (data) => setStaff([...data.items]),
+    });
+  }
+
+  function getStaffMobile(paxNameId: string | null | undefined) {
+    if (!paxNameId) return 'N/A';
+    const staffId = paxNameId.includes(' - ') ? paxNameId.split(' - ')[1] : paxNameId;
+    const staffMember = staff.find(s => s.staffId === staffId);
+    return staffMember ? String(staffMember.mobileNumber) : 'N/A';
   }
 
     async function deleteWorkTrip(id: string) {
@@ -37,6 +51,7 @@ function listWorkTrips() {
 
   useEffect(() => {
      listWorkTrips();
+     loadStaff();
    }, []);
 
 
@@ -46,9 +61,9 @@ function listWorkTrips() {
     <div className="max-w-[1580px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* To Work Table */}
           <div className="mt-8">
-            <h2 className="flex items-center text-[.85rem] text-gray-700 font-semibold mb-4 bg-gray-100 py-2 px-4 gap-2 rounded-lg uppercase">
+            <h2 className="flex items-center text-[.85rem] text-gray-700 font-semibold mb-4 bg-gray-100 py-2 px-4 gap-2 uppercase">
               <BuildingOfficeIcon aria-hidden="true" className="block size-4" />
-Transport To Work - ( {workTrips.length} )</h2>
+Transport To Work : ( {workTrips.length} )</h2>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead>
@@ -58,6 +73,7 @@ Transport To Work - ( {workTrips.length} )</h2>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Dropoff</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup Time</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Passenger</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Mobile</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Action</th>
                   </tr>
@@ -65,7 +81,7 @@ Transport To Work - ( {workTrips.length} )</h2>
                 <tbody className="divide-y divide-gray-200">
                   {workTrips.length === 0 ? (
                     <tr>
-                      <td colSpan={7} className="px-3 py-4 text-sm text-gray-500 text-center">
+                      <td colSpan={8} className="px-3 py-4 text-sm text-gray-500 text-center">
                         No bookings found
                       </td>
                     </tr>
@@ -86,6 +102,7 @@ Transport To Work - ( {workTrips.length} )</h2>
                 })}
               </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.paxNameId}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{getStaffMobile(trip.paxNameId)}</td>
                       <td className="px-3 py-4 text-sm text-gray-900">
                         {trip.poolId ? (
                           <span className="px-2 py-1 rounded-full text-xs bg-purple-100 text-purple-800">

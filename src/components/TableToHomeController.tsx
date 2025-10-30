@@ -18,6 +18,7 @@ export default function TableToHomeController() {
   const [homeTrips, setHomeTrips] = useState<Array<Schema["TransportToHome"]["type"]>>([]);
   const [selectedTrips, setSelectedTrips] = useState<Set<string>>(new Set());
   const [drivers, setDrivers] = useState<Array<Schema["Driver"]["type"]>>([]);
+  const [staff, setStaff] = useState<Array<Schema["Staff"]["type"]>>([]);
   const [showAssignDialog, setShowAssignDialog] = useState(false);
   const [showPoolDialog, setShowPoolDialog] = useState(false);
 
@@ -55,6 +56,20 @@ export default function TableToHomeController() {
     client.models.Driver.observeQuery().subscribe({
       next: (data) => setDrivers([...data.items]),
     });
+  }
+
+  function loadStaff() {
+    client.models.Staff.observeQuery().subscribe({
+      next: (data) => setStaff([...data.items]),
+    });
+  }
+
+  function getStaffMobile(paxNameId: string | null | undefined) {
+    if (!paxNameId) return 'N/A';
+    // Extract staff ID from "NAME - ID" format
+    const staffId = paxNameId.includes(' - ') ? paxNameId.split(' - ')[1] : paxNameId;
+    const staffMember = staff.find(s => s.staffId === staffId);
+    return staffMember ? String(staffMember.mobileNumber) : 'N/A';
   }
 
   function getDriverName(driverId: string | null | undefined) {
@@ -132,11 +147,12 @@ export default function TableToHomeController() {
   useEffect(() => {
     listHomeTrips();
     loadDrivers();
+    loadStaff();
   }, []);
 
   return (
     <div className="max-w-[1560] mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="mt-8">
+      <div className="mt-4">
 
 {/* subhead */}
           <div className="flex-row md:flex gap-4 items-center mb-12">
@@ -165,9 +181,9 @@ export default function TableToHomeController() {
           </div>
 
         <div className="flex justify-between items-center mb-8">
-          <h2 className="flex items-center text-[.85rem] text-gray-700 font-semibold bg-gray-100 py-2 px-4 gap-2 rounded-lg uppercase">
+          <h2 className="flex items-center text-[.85rem] text-gray-700 font-semibold bg-gray-100 py-2 px-4 gap-2 uppercase">
             <HomeIcon aria-hidden="true" className="block size-4" />
-            Transport To Home ( {homeTrips.length} )
+            Transport To Home : ( {homeTrips.length} )
           </h2>
           
           {/* Controller Actions */}
@@ -213,14 +229,15 @@ export default function TableToHomeController() {
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Dropoff</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup Time</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Passenger</th>
-                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Assigned Driver</th>
+                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Mobile</th>
+                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Driver</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               {homeTrips.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="px-3 py-4 text-sm text-gray-500 text-center">
+                  <td colSpan={9} className="px-3 py-4 text-sm text-gray-500 text-center">
                     No bookings found
                   </td>
                 </tr>
@@ -251,6 +268,7 @@ export default function TableToHomeController() {
                       ) : 'No time set'}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{String(trip.paxNameId || 'N/A')}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{getStaffMobile(trip.paxNameId)}</td>
                     <td className="px-3 py-4 text-sm text-gray-900">
                       <select
                         value={trip.assignedDriverId || 'UNASSIGN'}

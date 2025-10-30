@@ -14,11 +14,25 @@ const client = generateClient<Schema>();
 export default function TableToHome() {
     
 const [homeTrips, setHomeTrips] = useState<Array<Schema["TransportToHome"]["type"]>>([]);
+const [staff, setStaff] = useState<Array<Schema["Staff"]["type"]>>([]);
 
 function listHomeTrips() { 
       client.models.TransportToHome.observeQuery().subscribe({
       next: (data) => setHomeTrips([...data.items]),
     });
+  }
+
+  function loadStaff() {
+    client.models.Staff.observeQuery().subscribe({
+      next: (data) => setStaff([...data.items]),
+    });
+  }
+
+  function getStaffMobile(paxNameId: string | null | undefined) {
+    if (!paxNameId) return 'N/A';
+    const staffId = paxNameId.includes(' - ') ? paxNameId.split(' - ')[1] : paxNameId;
+    const staffMember = staff.find(s => s.staffId === staffId);
+    return staffMember ? String(staffMember.mobileNumber) : 'N/A';
   }
 
   async function deleteHomeTrip(id: string) {
@@ -34,6 +48,7 @@ function listHomeTrips() {
 
   useEffect(() => {
      listHomeTrips();
+     loadStaff();
    }, []);
 
 
@@ -45,8 +60,8 @@ function listHomeTrips() {
 
           {/* To Home Table */}
           <div className="mt-8">
-            <h2 className="flex items-center text-[.85rem] text-gray-700 font-semibold mb-4 bg-gray-100 py-2 px-4 gap-2 rounded-lg uppercase">
-              <HomeIcon aria-hidden="true" className="block size-4" />Transport To Home - ( {homeTrips.length} )</h2>
+            <h2 className="flex items-center text-[.85rem] text-gray-700 font-semibold mb-4 bg-gray-100 py-2 px-4 gap-2 uppercase">
+              <HomeIcon aria-hidden="true" className="block size-4" />Transport To Home : ( {homeTrips.length} )</h2>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead>
@@ -56,6 +71,7 @@ function listHomeTrips() {
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Dropoff</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup Time</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Passenger</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Mobile</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Action</th>
                   </tr>
@@ -63,7 +79,7 @@ function listHomeTrips() {
                 <tbody className="divide-y divide-gray-200">
                   {homeTrips.length === 0 ? (
                     <tr>
-                      <td colSpan={7} className="px-3 py-4 text-sm text-gray-500 text-center">
+                      <td colSpan={8} className="px-3 py-4 text-sm text-gray-500 text-center">
                         No bookings found
                       </td>
                     </tr>
@@ -84,6 +100,7 @@ function listHomeTrips() {
                 })}
               </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.paxNameId}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{getStaffMobile(trip.paxNameId)}</td>
                       <td className="px-3 py-4 text-sm text-gray-900">
                         {trip.poolId ? (
                           <span className="px-2 py-1 rounded-full text-xs bg-purple-100 text-purple-800">

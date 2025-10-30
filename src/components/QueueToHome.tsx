@@ -82,8 +82,8 @@ function listHomeTrips() {
 
           {/* To Home Table */}
           <div className="mt-8">
-            <h2 className="flex items-center text-[.85rem] text-gray-700 font-semibold mb-4 bg-gray-100 py-2 px-4 gap-2 rounded-lg uppercase">
-              <HomeIcon aria-hidden="true" className="block size-4" />Queue Transport To Home - ( {homeTrips.length} )</h2>
+            <h2 className="flex items-center text-[.85rem] text-gray-700 font-semibold mb-4 bg-gray-100 py-2 px-4 gap-2 uppercase">
+              <HomeIcon aria-hidden="true" className="block size-4" />Queue Transport To Home : ( {homeTrips.length} )</h2>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead>

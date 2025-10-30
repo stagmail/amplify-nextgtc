@@ -29,7 +29,7 @@ export default function DashboardTilesCT() {
     <MapPinIcon aria-hidden="true" className="size-8 text-slate-700" />
     <div>
     <div className="text-lg font-medium text-slate-700 text-left dark:text-white">Locations</div>
-    <p className="text-slate-500 dark:text-slate-400 text-sm">Pick-up, Drop-Off</p>
+    <p className="text-slate-500 dark:text-slate-400 text-sm">Add, Remove Work Locations</p>
     </div>
     </Link>
 

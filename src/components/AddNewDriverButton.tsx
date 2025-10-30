@@ -16,7 +16,6 @@ export default function AddNewDriverButton() {
   let [isOpen, setIsOpen] = useState(false)
   const [formData, setFormData] = useState({
     fullName: '',
-    licenceNo: '',
     vehicleNo: '',
     mobileNumber: '',
   });
@@ -27,10 +26,12 @@ export default function AddNewDriverButton() {
     setLoading(true);
 
     try {
-      await client.models.Driver.create(formData);
+      await client.models.Driver.create({
+        ...formData,
+        licenceNo: '' // Set empty string for required field
+      });
     setFormData({
         fullName: '',
-        licenceNo: '',
         vehicleNo: '',
         mobileNumber: '',
       });
@@ -65,19 +66,6 @@ export default function AddNewDriverButton() {
             type="text"
             value={formData.fullName}
             onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-            required
-            className="w-full px-3 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 h-12"
-          />
-        </div>
-
-         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Licence Number
-          </label>
-          <input
-            type="text"
-            value={formData.licenceNo}
-            onChange={(e) => setFormData({...formData, licenceNo: e.target.value})}
             required
             className="w-full px-3 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 h-12"
           />

@@ -18,6 +18,7 @@ export default function TableToWorkController() {
   const [workTrips, setWorkTrips] = useState<Array<Schema["TransportToWork"]["type"]>>([]);
   const [selectedTrips, setSelectedTrips] = useState<Set<string>>(new Set());
   const [drivers, setDrivers] = useState<Array<Schema["Driver"]["type"]>>([]);
+  const [staff, setStaff] = useState<Array<Schema["Staff"]["type"]>>([]);
   const [showAssignDialog, setShowAssignDialog] = useState(false);
   const [showPoolDialog, setShowPoolDialog] = useState(false);
 
@@ -55,6 +56,20 @@ export default function TableToWorkController() {
     client.models.Driver.observeQuery().subscribe({
       next: (data) => setDrivers([...data.items]),
     });
+  }
+
+  function loadStaff() {
+    client.models.Staff.observeQuery().subscribe({
+      next: (data) => setStaff([...data.items]),
+    });
+  }
+
+  function getStaffMobile(paxNameId: string | null | undefined) {
+    if (!paxNameId) return 'N/A';
+    // Extract staff ID from "NAME - ID" format
+    const staffId = paxNameId.includes(' - ') ? paxNameId.split(' - ')[1] : paxNameId;
+    const staffMember = staff.find(s => s.staffId === staffId);
+    return staffMember ? String(staffMember.mobileNumber) : 'N/A';
   }
 
   function getDriverName(driverId: string | null | undefined) {
@@ -132,6 +147,7 @@ export default function TableToWorkController() {
   useEffect(() => {
     listWorkTrips();
     loadDrivers();
+    loadStaff();
   }, []);
 
   return (
@@ -165,9 +181,9 @@ export default function TableToWorkController() {
           </div>
 
         <div className="flex justify-between items-center mb-8">
-          <h2 className="flex items-center text-[.85rem] text-gray-700 font-semibold bg-gray-100 py-2 px-4 gap-2 rounded-lg uppercase">
+          <h2 className="flex items-center text-[.85rem] text-gray-700 font-semibold bg-gray-100 py-2 px-4 gap-2 uppercase">
             <BuildingOfficeIcon aria-hidden="true" className="block size-4" />
-            Transport To Work ( {workTrips.length} )
+            Transport To Work : ( {workTrips.length} )
           </h2>
           
       {/* Controller Actions */}
@@ -189,7 +205,7 @@ export default function TableToWorkController() {
             <button 
               onClick={deleteSelectedTrips}
               disabled={selectedTrips.size === 0}
-              className="px-8 py-2 bg-red-600 text-[.9rem] uppercase text-white rounded-full disabled:bg-slate-300 hover:bg-red-700"
+              className="inline-block px-8 py-2 bg-red-600 text-[.9rem] uppercase text-white rounded-full disabled:bg-slate-300 hover:bg-red-700"
             >
               Delete
             </button>
@@ -213,14 +229,15 @@ export default function TableToWorkController() {
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Dropoff</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup Time</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Passenger</th>
-                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Assigned Driver</th>
+                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Mobile</th>
+                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Driver</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               {workTrips.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="px-3 py-4 text-sm text-gray-500 text-center">
+                  <td colSpan={9} className="px-3 py-4 text-sm text-gray-500 text-center">
                     No bookings found
                   </td>
                 </tr>
@@ -251,6 +268,7 @@ export default function TableToWorkController() {
                       ) : 'No time set'}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{String(trip.paxNameId || 'N/A')}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{getStaffMobile(trip.paxNameId)}</td>
                     <td className="px-3 py-4 text-sm text-gray-900">
                       <select
                         value={trip.assignedDriverId || 'UNASSIGN'}

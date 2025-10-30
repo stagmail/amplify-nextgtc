@@ -31,7 +31,7 @@ export default function DriverListTable() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="mt-8">
-        <h2 className="flex items-center text-[1rem] font-semibold gap-2 mb-4 bg-slate-100 px-4 py-2 rounded-full">
+        <h2 className="flex items-center text-[1rem] font-semibold gap-2 mb-4 bg-slate-100 px-4 py-2">
           <UserPlusIcon aria-hidden="true" className="block size-4" />
           Driver List ({drivers.length})
         </h2>
