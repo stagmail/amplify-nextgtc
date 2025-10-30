@@ -17,7 +17,7 @@ export default function Page() {
       <div className="w-full min-h-screen bg-white">
         <NavbarController user={user} signOut={signOut} />
         
-       <Header name="Manage Transport" role="Controller"/>
+       <Header name="Dashboard" role="Controller"/>
        <Subhead name="Get Started:" />
    
 

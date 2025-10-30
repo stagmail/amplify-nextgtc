@@ -1,17 +1,17 @@
 
-import { useState, useEffect } from 'react'
-import { generateClient } from "aws-amplify/data";
-import type { Schema } from "../../amplify/data/resource";
 import { Amplify } from "aws-amplify";
 import outputs from "../../amplify_outputs.json";
+import { generateClient } from "aws-amplify/data";
+import { useState, useEffect } from 'react'
+import type { Schema } from "../../amplify/data/resource";
 import AddressSearch from "./AddressSearch";
 import PassengerSearch from "./PassengerSerach";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../app/datepicker.css";
 import "../app/styles.css"
-import { MapPinIcon, ClockIcon, UserIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
+import { MapPinIcon, ClockIcon, UserIcon } from '@heroicons/react/24/outline';
+import ToggleButtonCT from './ToggleButtonCT';
 
 
 Amplify.configure(outputs);
@@ -112,15 +112,7 @@ export default function ToWorkButton() {
             })}
           </div>
 
-          <div className="flex gap-2 ml-auto">
-            <div  
-            className="text-sm bg-gray-200 text-white py-2 w-[142px] rounded-full font-light text-center" aria-disabled>TO WORK
-            </div>
-
-            <Link href="/tohome" 
-            className="text-sm bg-gtc-hue text-white py-2 w-[142px] rounded-full hover:bg-teal-500 font-light text-center items-center flex justify-center"><ChevronRightIcon className="block size-4 -ml-2" /> TO HOME
-            </Link>
-          </div>
+            <ToggleButtonCT activeTab="work" workRoute="/towork" homeRoute="/tohome" />
 
           </div>
             

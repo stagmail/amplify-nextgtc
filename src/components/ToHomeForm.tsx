@@ -9,9 +9,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../app/datepicker.css";
 import "../app/styles.css"
-import { MapPinIcon, ClockIcon, UserIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
-
+import { MapPinIcon, ClockIcon, UserIcon } from '@heroicons/react/24/outline';
+import ToggleButtonCT from './ToggleButtonCT';
 
 Amplify.configure(outputs);
 
@@ -111,18 +110,7 @@ export default function ToHomeButton() {
             })}
           </div>
 
-          <div className="flex gap-2 ml-auto">
-
-            <Link 
-            href="/towork" 
-            className="text-sm bg-gtc-hue hover:bg-teal-500 text-white py-2 w-[142px] rounded-full font-light text-center items-center flex justify-center"><ChevronRightIcon className="block size-4 -ml-2" /> TO WORK
-            </Link>
-
-            <div
-            className="text-sm bg-gray-200 text-white py-2 w-[142px] rounded-full font-light text-center" aria-disabled>TO HOME
-            </div>
-            
-          </div>
+            <ToggleButtonCT activeTab="home" workRoute="/towork" homeRoute="/tohome" />
 
           </div>
 

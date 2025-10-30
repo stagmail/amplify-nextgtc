@@ -163,7 +163,7 @@ export default function PoolTripsDialog({
                 <option value="">Choose a driver</option>
                 {drivers.map((driver) => (
                   <option key={driver.id} value={driver.id}>
-                    {driver.fullName} - {driver.vehicleNo} ({driver.licenceNo})
+                    {String(driver.fullName || 'Unknown')} - {String(driver.vehicleNo || 'N/A')}
                   </option>
                 ))}
               </select>

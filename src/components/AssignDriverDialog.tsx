@@ -111,7 +111,7 @@ export default function AssignDriverDialog({
                 <option value="UNASSIGN">🚫 Unassign Driver</option>
                 {drivers.map((driver) => (
                   <option key={driver.id} value={driver.id}>
-                    {driver.fullName} - {driver.vehicleNo} ({driver.licenceNo})
+                    {String(driver.fullName || 'Unknown')} - {String(driver.vehicleNo || 'N/A')}
                   </option>
                 ))}
               </select>

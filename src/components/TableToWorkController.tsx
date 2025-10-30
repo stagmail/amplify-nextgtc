@@ -1,14 +1,14 @@
 'use client'
 
-import { useState, useEffect } from "react";
-import { generateClient } from "aws-amplify/data";
-import type { Schema } from "../../amplify/data/resource";
 import { Amplify } from "aws-amplify";
+import { generateClient } from "aws-amplify/data";
+import { useState, useEffect } from "react";
+import type { Schema } from "../../amplify/data/resource";
 import outputs from "../../amplify_outputs.json";
-import { BuildingOfficeIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
+import { BuildingOfficeIcon } from '@heroicons/react/20/solid';
 import AssignDriverDialog from './AssignDriverDialog';
 import PoolTripsDialog from './PoolTripsDialog';
-import Link from "next/link";
+import ToggleButtonCT from './ToggleButtonCT';
 
 Amplify.configure(outputs);
 
@@ -152,7 +152,7 @@ export default function TableToWorkController() {
 
   return (
     <div className="max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="mt-4">
+      <div className="mt-2">
 
  {/* subhead */}
           <div className="flex-row md:flex gap-4 items-center mb-12">
@@ -168,15 +168,7 @@ export default function TableToWorkController() {
             })}
           </div>
 
-          <div className="flex items-center ml-auto">
-            <div 
-            className="text-xs bg-gray-200 text-white py-2 w-[110px] tracking-wide rounded-l-full font-light text-center" aria-disabled>TO WORK
-            </div>
-
-            <Link href="/pooltohome" 
-            className="text-xs bg-gtc-hue text-white py-2 w-[110px] tracking-wide rounded-r-full hover:bg-teal-500 font-light text-center items-center flex justify-center"> <ChevronRightIcon className="block size-4 -ml-2" />TO HOME
-            </Link>
-          </div>
+            <ToggleButtonCT activeTab="work" />
 
           </div>
 
@@ -253,8 +245,8 @@ export default function TableToWorkController() {
                       />
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{index + 1}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.pickupLocation}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.dropoffLocation}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{String(trip.pickupLocation || 'N/A')}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{String(trip.dropoffLocation || 'N/A')}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 uppercase">
                       {trip.pickupTime ? (
                         `${new Date(trip.pickupTime).toLocaleDateString('en-GB', { 
