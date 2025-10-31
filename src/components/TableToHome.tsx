@@ -35,6 +35,17 @@ function listHomeTrips() {
     return staffMember ? String(staffMember.mobileNumber) : 'N/A';
   }
 
+  function extractPostalCode(address: string | null | undefined) {
+    if (!address) return 'N/A';
+    const postalMatch = address.match(/\b\d{6}\b/);
+    return postalMatch ? postalMatch[0] : 'N/A';
+  }
+
+  function removePostalCode(address: string | null | undefined) {
+    if (!address) return 'N/A';
+    return address.replace(/\b\d{6}\b/g, '').replace(/\bSINGAPORE\b/gi, '').replace(/\s+/g, ' ').trim();
+  }
+
   async function deleteHomeTrip(id: string) {
     if (window.confirm('Are you sure you want to delete this booking?')) {
       try {
@@ -69,6 +80,7 @@ function listHomeTrips() {
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">S/n</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Dropoff</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Postal</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup Time</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Passenger</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Mobile</th>
@@ -79,7 +91,7 @@ function listHomeTrips() {
                 <tbody className="divide-y divide-gray-200">
                   {homeTrips.length === 0 ? (
                     <tr>
-                      <td colSpan={8} className="px-3 py-4 text-sm text-gray-500 text-center">
+                      <td colSpan={9} className="px-3 py-4 text-sm text-gray-500 text-center">
                         No bookings found
                       </td>
                     </tr>
@@ -88,7 +100,8 @@ function listHomeTrips() {
                     <tr key={trip.id}>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{index + 1}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.pickupLocation}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.dropoffLocation}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{removePostalCode(trip.dropoffLocation)}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{extractPostalCode(trip.dropoffLocation)}</td>
                                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 uppercase">
                 {new Date(trip.pickupTime).toLocaleDateString('en-GB', { 
                   day: '2-digit', 

@@ -72,6 +72,17 @@ export default function TableToHomeController() {
     return staffMember ? String(staffMember.mobileNumber) : 'N/A';
   }
 
+  function extractPostalCode(address: string | null | undefined) {
+    if (!address) return 'N/A';
+    const postalMatch = address.match(/\b\d{6}\b/);
+    return postalMatch ? postalMatch[0] : 'N/A';
+  }
+
+  function removePostalCode(address: string | null | undefined) {
+    if (!address) return 'N/A';
+    return address.replace(/\b\d{6}\b/g, '').replace(/\bSINGAPORE\b/gi, '').replace(/\s+/g, ' ').trim();
+  }
+
   function getDriverName(driverId: string | null | undefined) {
     if (!driverId) return 'Unassigned';
     const driver = drivers.find(d => d.id === driverId);
@@ -220,6 +231,7 @@ export default function TableToHomeController() {
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">S/N</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Dropoff</th>
+                <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Postal</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup Time</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Passenger</th>
                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Mobile</th>
@@ -230,7 +242,7 @@ export default function TableToHomeController() {
             <tbody className="divide-y divide-gray-200">
               {homeTrips.length === 0 ? (
                 <tr>
-                  <td colSpan={9} className="px-3 py-4 text-sm text-gray-500 text-center">
+                  <td colSpan={10} className="px-3 py-4 text-sm text-gray-500 text-center">
                     No bookings found
                   </td>
                 </tr>
@@ -247,7 +259,8 @@ export default function TableToHomeController() {
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{index + 1}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.pickupLocation}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.dropoffLocation}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{removePostalCode(trip.dropoffLocation)}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{extractPostalCode(trip.dropoffLocation)}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 uppercase">
                       {trip.pickupTime ? (
                         `${new Date(trip.pickupTime).toLocaleDateString('en-GB', { 
