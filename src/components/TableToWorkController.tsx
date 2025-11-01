@@ -83,6 +83,21 @@ export default function TableToWorkController() {
     return address.replace(/\b\d{6}\b/g, '').replace(/\bSINGAPORE\b/gi, '').replace(/\s+/g, ' ').trim();
   }
 
+  function formatPickupTime(pickupTime: string | null | undefined) {
+    if (!pickupTime) return 'No time set';
+    const date = new Date(pickupTime);
+    const dateStr = date.toLocaleDateString('en-GB', { 
+      day: '2-digit', 
+      month: 'short', 
+      year: 'numeric' 
+    });
+    const timeStr = date.toLocaleTimeString('en-GB', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    return { dateStr, timeStr };
+  }
+
   function getDriverName(driverId: string | null | undefined) {
     if (!driverId) return 'Unassigned';
     const driver = drivers.find(d => d.id === driverId);
@@ -169,7 +184,7 @@ export default function TableToWorkController() {
           <div className="flex-row md:flex gap-3 items-center mb-12">
 
             <div className="text-left uppercase text-[1.1rem] font-semibold text-gtc-hue">
-            <span className='font-light'>Pool Transport</span> To Work</div>
+            <span className='font-light'>Pooled Transport</span> To Work</div>
 
             <div className="block text-[1.1rem] uppercase text-rose-500 font-extralight">
               {new Date().toLocaleDateString('en-SG', { 
@@ -180,7 +195,7 @@ export default function TableToWorkController() {
             })}
           </div>
 
-            <ToggleButtonCT activeTab="work" />
+            <ToggleButtonCT activeTab="work" workRoute="/list-work-controller" homeRoute="/list-home-controller" />
 
           </div>
 
@@ -259,19 +274,18 @@ export default function TableToWorkController() {
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{index + 1}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{removePostalCode(trip.pickupLocation)}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{extractPostalCode(trip.pickupLocation)}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-teal-600">{extractPostalCode(trip.pickupLocation)}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{String(trip.dropoffLocation || 'N/A')}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 uppercase">
-                      {trip.pickupTime ? (
-                        `${new Date(trip.pickupTime).toLocaleDateString('en-GB', { 
-                          day: '2-digit', 
-                          month: 'short', 
-                          year: 'numeric' 
-                        })} ${new Date(trip.pickupTime).toLocaleTimeString('en-GB', {
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}`
-                      ) : 'No time set'}
+                      {(() => {
+                        const timeInfo = formatPickupTime(trip.pickupTime);
+                        if (typeof timeInfo === 'string') return timeInfo;
+                        return (
+                          <span>
+                            {timeInfo.dateStr} <span className="text-rose-500 ml-1">{timeInfo.timeStr}</span>
+                          </span>
+                        );
+                      })()}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{String(trip.paxNameId || 'N/A')}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{getStaffMobile(trip.paxNameId)}</td>

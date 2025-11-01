@@ -12,6 +12,32 @@ Amplify.configure(outputs);
 const client = generateClient<Schema>();
 
 export default function QueueToWork() {
+
+  function extractPostalCode(address: string | null | undefined) {
+    if (!address) return 'N/A';
+    const postalMatch = address.match(/\b\d{6}\b/);
+    return postalMatch ? postalMatch[0] : 'N/A';
+  }
+
+  function removePostalCode(address: string | null | undefined) {
+    if (!address) return 'N/A';
+    return address.replace(/\b\d{6}\b/g, '').replace(/\bSINGAPORE\b/gi, '').replace(/\s+/g, ' ').trim();
+  }
+
+  function formatPickupTime(pickupTime: string | null | undefined) {
+    if (!pickupTime) return 'No time set';
+    const date = new Date(pickupTime);
+    const dateStr = date.toLocaleDateString('en-GB', { 
+      day: '2-digit', 
+      month: 'short', 
+      year: 'numeric' 
+    });
+    const timeStr = date.toLocaleTimeString('en-GB', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    return { dateStr, timeStr };
+  }
     
 const [workTrips, setWorkTrips] = useState<Array<Schema["QueueToWork"]["type"]>>([]);
 const [loading, setLoading] = useState(false);
@@ -90,6 +116,7 @@ function listWorkTrips() {
                   <tr>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">S/n</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Postal Code</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Dropoff</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pickup Time</th>
                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Passenger</th>
@@ -99,7 +126,7 @@ function listWorkTrips() {
                 <tbody className="divide-y divide-gray-200">
                   {workTrips.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="px-3 py-4 text-sm text-gray-500 text-center">
+                      <td colSpan={7} className="px-3 py-4 text-sm text-gray-500 text-center">
                         No bookings found
                       </td>
                     </tr>
@@ -107,18 +134,20 @@ function listWorkTrips() {
                   workTrips.map((trip, index) => (
                     <tr key={trip.id}>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{index + 1}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.pickupLocation}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{removePostalCode(trip.pickupLocation)}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{extractPostalCode(trip.pickupLocation)}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.dropoffLocation}</td>
-                                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 uppercase">
-                {new Date(trip.pickupTime).toLocaleDateString('en-GB', { 
-                  day: '2-digit', 
-                  month: 'short', 
-                  year: 'numeric' 
-                })} {new Date(trip.pickupTime).toLocaleTimeString('en-GB', {
-                  hour: '2-digit',
-                  minute: '2-digit'
-                })}
-              </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 uppercase">
+                        {(() => {
+                          const timeInfo = formatPickupTime(trip.pickupTime);
+                          if (typeof timeInfo === 'string') return timeInfo;
+                          return (
+                            <span>
+                              {timeInfo.dateStr} <span className="text-rose-500 ml-1">{timeInfo.timeStr}</span>
+                            </span>
+                          );
+                        })()}
+                      </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.paxNameId}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
                         <button 

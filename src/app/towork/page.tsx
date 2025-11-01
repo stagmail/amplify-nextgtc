@@ -1,7 +1,7 @@
 "use client";
 
-import { Amplify } from "aws-amplify";
-import outputs from "../../../amplify_outputs.json";
+// import { Amplify } from "aws-amplify";
+// import outputs from "../../../amplify_outputs.json";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import Navbar from "@/components/Navbar";
 import Header from "@/components/Header";
@@ -9,7 +9,7 @@ import QueueToWork from "@/components/QueueToWork";
 import ToWorkForm from "@/components/ToWorkForm";
 
 
-Amplify.configure(outputs);
+// Amplify.configure(outputs);
 
 export default function Page() {
     

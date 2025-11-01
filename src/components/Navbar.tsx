@@ -11,7 +11,7 @@ type NavbarProps = {
 const navigation = [
   { name: 'Dashboard', href: '/', current: false },
   { name: 'Indent', href: '/towork', current: false },
-  { name: 'Lists', href: '/listing', current: false },
+  { name: 'Lists', href: '/list-work-manager', current: false },
   { name: 'Staff', href: '/staff', current: false },
   { name: 'Reports', href: '/reports', current: false },
   { name: 'Controller', href: '/controller', current: true },

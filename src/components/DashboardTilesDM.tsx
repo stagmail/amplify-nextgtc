@@ -14,7 +14,7 @@ export default function DashboardTilesDM() {
     </div>
     </Link>
 
-    <Link className="flex mt-4 w-full md:w-[300px] items-center gap-x-4 rounded-2xl bg-white p-6 shadow-lg outline outline-black/5 dark:bg-slate-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10" href="/listing">
+    <Link className="flex mt-4 w-full md:w-[300px] items-center gap-x-4 rounded-2xl bg-white p-6 shadow-lg outline outline-black/5 dark:bg-slate-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10" href="/list-work-manager">
     <TableCellsIcon aria-hidden="true" className="size-8 text-slate-700" />
 
     <div>

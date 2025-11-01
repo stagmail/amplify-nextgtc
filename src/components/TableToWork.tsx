@@ -1,11 +1,12 @@
 'use client'
 
-import { useState, useEffect } from "react";
-import { generateClient } from "aws-amplify/data";
-import type { Schema } from "../../amplify/data/resource";
 import { Amplify } from "aws-amplify";
 import outputs from "../../amplify_outputs.json";
+import { generateClient } from "aws-amplify/data";
+import { useState, useEffect } from "react";
+import type { Schema } from "../../amplify/data/resource";
 import { BuildingOfficeIcon } from '@heroicons/react/20/solid';
+import ToggleButtonCT from "./ToggleButtonCT";
 
 
 Amplify.configure(outputs);
@@ -49,6 +50,21 @@ function listWorkTrips() {
     return address.replace(/\b\d{6}\b/g, '').replace(/\bSINGAPORE\b/gi, '').replace(/\s+/g, ' ').trim();
   }
 
+  function formatPickupTime(pickupTime: string | null | undefined) {
+    if (!pickupTime) return 'No time set';
+    const date = new Date(pickupTime);
+    const dateStr = date.toLocaleDateString('en-GB', { 
+      day: '2-digit', 
+      month: 'short', 
+      year: 'numeric' 
+    });
+    const timeStr = date.toLocaleTimeString('en-GB', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    return { dateStr, timeStr };
+  }
+
     async function deleteWorkTrip(id: string) {
       if (window.confirm('Are you sure you want to delete this booking?')) {
         try {
@@ -70,11 +86,54 @@ function listWorkTrips() {
     
 
     <div className="max-w-[1580px] mx-auto px-4 sm:px-6 lg:px-8">
+
+      {/* subhead */}
+                      <div className="flex-row md:flex gap-3 items-center mb-12">
+            
+                        <div className="text-left uppercase text-[1.1rem] font-semibold text-gtc-hue">
+                        <span className='font-light'>Indented Transport</span> To Work</div>
+            
+                        <div className="block text-[1.1rem] uppercase text-rose-500 font-extralight">
+                          {new Date().toLocaleDateString('en-SG', { 
+                          day: '2-digit', 
+                          month: 'long', 
+                          year: 'numeric',
+                          timeZone: 'Asia/Singapore'
+                        })}
+                      </div>
+            
+                        <ToggleButtonCT activeTab="work" workRoute="/list-work-manager" homeRoute="/list-home-manager" />
+            
+                      </div>
+
           {/* To Work Table */}
           <div className="mt-8">
-            <h2 className="flex items-center text-[.85rem] text-gray-700 font-semibold mb-4 bg-gray-100 py-2 px-4 gap-2 uppercase">
-              <BuildingOfficeIcon aria-hidden="true" className="block size-4" />
-Transport To Work : ( {workTrips.length} )</h2>
+   <div className="flex justify-between items-center mb-8">
+          <h2 className="flex items-center text-[.85rem] text-gray-700 font-semibold bg-gray-100 py-2 px-4 gap-2 uppercase">
+            <BuildingOfficeIcon aria-hidden="true" className="block size-4" />
+            Transport To Work : ( {workTrips.length} )
+          </h2>
+          
+      {/* Controller Actions */}
+          <div className="flex gap-2">
+            <button 
+              // onClick={assignDriver}
+              // disabled={selectedTrips.size === 0}
+              className="px-8 py-2 bg-[#047d95] text-[.9rem] uppercase text-white rounded-full disabled:bg-slate-300"
+            >
+              Assign Driver
+            </button>
+            
+            <button 
+              // onClick={deleteSelectedTrips}
+              // disabled={selectedTrips.size === 0}
+              className="inline-block px-8 py-2 bg-red-600 text-[.9rem] uppercase text-white rounded-full disabled:bg-slate-300 hover:bg-red-700"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead>
@@ -105,15 +164,16 @@ Transport To Work : ( {workTrips.length} )</h2>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{extractPostalCode(trip.pickupLocation)}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.dropoffLocation}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 uppercase">
-                {new Date(trip.pickupTime).toLocaleDateString('en-GB', { 
-                  day: '2-digit', 
-                  month: 'short', 
-                  year: 'numeric' 
-                })} {new Date(trip.pickupTime).toLocaleTimeString('en-GB', {
-                  hour: '2-digit',
-                  minute: '2-digit'
-                })}
-              </td>
+                      {(() => {
+                        const timeInfo = formatPickupTime(trip.pickupTime);
+                        if (typeof timeInfo === 'string') return timeInfo;
+                        return (
+                          <span>
+                            {timeInfo.dateStr} <span className="text-rose-500 ml-1">{timeInfo.timeStr}</span>
+                          </span>
+                        );
+                      })()}
+                    </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{trip.paxNameId}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">{getStaffMobile(trip.paxNameId)}</td>
                       <td className="px-3 py-4 text-sm text-gray-900">

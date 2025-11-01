@@ -11,7 +11,7 @@ type NavbarProps = {
 const navigation = [
   { name: 'Dashboard', href: '/controller', current: false },
   { name: 'Pooling', href: '/pooltowork', current: false },
-  { name: 'Lists', href: '/listing', current: false },
+  { name: 'Lists', href: '/list-work-controller', current: false },
   { name: 'Driver', href: '/driver', current: false },
   { name: 'Locations', href: '/locations', current: false },
   // { name: 'Staff', href: '/staff', current: false },
